@@ -9,6 +9,10 @@ ehthumbs.db
 Thumbs.db
 
 # IntelliJ IDEA #
-######################
+#################
 .idea
 *.iml
+
+# node.js dependencies #
+########################
+node_modules
