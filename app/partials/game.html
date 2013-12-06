@@ -1,0 +1,17 @@
+<div class="page-header">
+    <h1>Tarot a {{nbPlayers}}</h1>
+</div>
+<form role="form">
+<div ng-repeat="i in range[0]" class="row">
+    <div ng-repeat="j in range[$index]" class="col-md-4">
+        <div class="thumbnail">
+            <img ng-src="img/default-avatar.png" alt="">
+            <div class="caption">
+                <label for="username{{j+1}}">Nom du joueur {{j+1}}</label>
+                <input ng-model="Game.players[j].name" required type="text" class="form-control" id="username{{j+1}}" placeholder="Nom du joueur {{j+1}}">
+            </div>
+        </div>
+    </div>
+</div>
+<button ng-click="submit(Game)" class="btn btn-default">Valider</button>
+</form>
