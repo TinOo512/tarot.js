@@ -5,8 +5,9 @@ if (typeof define !== 'function') {
     var define = (require('amdefine'))(module);
 }
 define([
-    'express.io'
-], function (express) {
+    'express.io',
+    './config/boot'
+], function (express, boot) {
     var app = express().http().io();
 
     // settings
@@ -61,8 +62,8 @@ define([
         req.session.messages = [];
     });
 
-    // load controllers
-    //require('./lib/boot')(app, { verbose: !module.parent });
+    // load controllers and sockets
+    boot.route(app, { verbose: !module.parent });
 
     // assume "not found" in the error msgs
     // is a 404. this is somewhat silly, but

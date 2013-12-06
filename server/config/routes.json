@@ -1,0 +1,13 @@
+{
+    "routes" :{
+    "controllers" :{
+    },
+    "sockets" :{
+        "index" :{
+            "indexAction" :{
+                "path":"index"
+            }
+        }
+    }
+}
+}
