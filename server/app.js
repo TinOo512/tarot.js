@@ -37,7 +37,7 @@ define([
     app.use(express.bodyParser());
 
     // support _method (PUT in forms etc)
-    app.use(express.methodOverride());
+    // app.use(express.methodOverride());
 
     // expose the "messages" local variable when views are rendered
     app.use(function(req, res, next){
