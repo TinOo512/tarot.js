@@ -6,7 +6,7 @@ if (typeof define !== 'function') {
 }
 define([
     'express.io',
-    './config/boot'
+    './lib/boot'
 ], function (express, boot) {
     var app = express().http().io();
 
