@@ -4,7 +4,7 @@
 
 var playerModel = angular.module('PlayerModel', []);
 
-playerModel.service('PlayerModel', [
+playerModel.service('Player', [
     function() {
         function Player() {
             this.name = null;

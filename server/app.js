@@ -44,7 +44,7 @@ define([
 
     // session support
     app.use(express.cookieParser('79vm86SUm34c3ZSxtc3aSPnn8DReU9Q4'));
-    app.use(express.session());
+    app.use(express.session({secret: '79vm86SUm34c3ZSxtc3aSPnn8DReU9Q4'}));
 
     // parse request bodies (req.body)
     app.use(express.bodyParser());

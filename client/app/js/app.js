@@ -4,6 +4,7 @@
 
 var tarotApp = angular.module('tarotApp', [
   'ngRoute',
+  'SocketService',
   'HomeCtrl',
   'GameCtrl',
   'GamesHistoryCtrl',

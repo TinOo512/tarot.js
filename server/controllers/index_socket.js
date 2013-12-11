@@ -5,7 +5,7 @@ define([
 ], function () {
     var Socket = {
         indexAction: function(req) {
-            console.log("Hello World!");
+            console.log(req.data);
         }
     };
     return Socket;

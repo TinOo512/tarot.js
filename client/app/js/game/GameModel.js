@@ -4,7 +4,7 @@
 
 var gameModel = angular.module('GameModel', ['PlayerModel']);
 
-gameModel.service('GameModel', ['PlayerModel',
+gameModel.service('Game', ['Player',
     function(Player) {
         var model = {
             init: function(nbPlayers) {
