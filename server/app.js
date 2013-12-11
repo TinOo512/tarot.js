@@ -6,11 +6,24 @@ if (typeof define !== 'function') {
 }
 define([
     'express.io',
+    './lib/mongoose',
     './lib/boot'
-], function (express, boot) {
+], function (express, mongoose, boot) {
     var app = express().http().io();
 
     // settings
+
+    // initialisation de la bdd
+    mongoose.init();
+
+    // map .renderFile to ".html" files
+    //app.engine('html', require('ejs').renderFile)
+
+    // make ".html" the default
+    app.set('view engine', 'html');
+
+    // set views for error and 404 pages
+    //app.set('views', __dirname + '/views');
 
     // define a custom res.message() method
     // which stores messages in the session

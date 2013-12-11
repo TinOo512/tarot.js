@@ -2,7 +2,7 @@ if (typeof define !== 'function') {
     var define = (require('amdefine'))(module);
 }
 define([
-    '../node_modules/express.io',
+    'express.io',
     'fs'
 ], function (express, fs) {
     var routes = {
