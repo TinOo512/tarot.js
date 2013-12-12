@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "express.io": "1.x",
+    "ejs": "*",
     "amdefine": ">=0.1.0",
     "mongoose": "3.x"
   },

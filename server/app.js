@@ -6,9 +6,10 @@ if (typeof define !== 'function') {
 }
 define([
     'express.io',
+    'ejs',
     './lib/mongoose',
     './lib/boot'
-], function (express, mongoose, boot) {
+], function (express, ejs, mongoose, boot) {
     var app = express().http().io();
 
     // settings
@@ -17,7 +18,7 @@ define([
     mongoose.init();
 
     // map .renderFile to ".html" files
-    //app.engine('html', require('ejs').renderFile)
+    app.engine('html', ejs.renderFile);
 
     // make ".html" the default
     app.set('view engine', 'html');

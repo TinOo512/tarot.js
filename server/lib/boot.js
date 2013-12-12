@@ -9,7 +9,7 @@ define([
         route:function (parent, options) {
             var verbose = options.verbose;
             // lecture du json contenant le path et la methode des routes
-            var routesConf = JSON.parse(fs.readFileSync("./config/routes.json", "utf-8"));
+            var routesConf = JSON.parse(fs.readFileSync(__dirname + "/../config/routes.json", "utf-8"));
 
             fs.readdirSync(__dirname + '/../controllers').forEach(function(fileName){
                 verbose && console.log('\n %s:', fileName);
