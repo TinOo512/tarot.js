@@ -24,7 +24,7 @@ define([
     app.set('view engine', 'html');
 
     // set views for error and 404 pages
-    //app.set('views', __dirname + '/views');
+    app.set('views', __dirname + '/views');
 
     // define a custom res.message() method
     // which stores messages in the session
