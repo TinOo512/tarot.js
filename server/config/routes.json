@@ -5,7 +5,12 @@
     "sockets" :{
         "index" :{
             "indexAction" :{
-                "path":"index"
+                "path":"index/index"
+            }
+        },
+        "player" :{
+            "addUserAction" :{
+                "path":"player/add-user"
             }
         }
     }

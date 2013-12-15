@@ -9,7 +9,7 @@ define([
         models: null,
         init: function(){
             //initialisation de la connection à la bdd
-            this.instance = Mongoose.connect('mongodb://localhost/test', {
+            this.instance = Mongoose.connect('mongodb://localhost/tarot-js', {
                 user: '',
                 pass: ''
             });

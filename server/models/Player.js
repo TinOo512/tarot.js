@@ -7,7 +7,9 @@ define([
     var Schema = Mongoose.Schema;
 
     var PlayerSchema = new Schema({
-        name:  String
+        name:  { type: String, required: true, unique: true },
+        password: { type: String, required: true }
+
     });
 
     return PlayerSchema;

@@ -31,8 +31,9 @@ function gameAtThreePlayers($scope, $location, Game, Socket) {
     $scope.Game = Game;
 
     $scope.submit = function(Game) {
+        debugger;
         console.log(Game);
-        Socket.emit('index', { hello: 'world' });
+        Socket.emit('player/add-user', { player: Game.players[0] });
         $location.path('/game/panel');
     };
 
@@ -49,7 +50,7 @@ function gameAtFourPlayers($scope, $location, Game, Socket) {
 
     $scope.submit = function(Game) {
         console.log(Game);
-        Socket.emit('index', { hello: 'world' });
+        Socket.emit('player/add-user', { player: Game.players[0] });
         $location.path('/game/panel');
     };
 }
@@ -65,7 +66,7 @@ function gameAtFivePlayers($scope, $location, Game, Socket) {
 
     $scope.submit = function(Game) {
         console.log(Game);
-        Socket.emit('index', { hello: 'world' });
+        Socket.emit('player/add-user', { player: Game.players[0] });
         $location.path('/game/panel');
     };
 }
