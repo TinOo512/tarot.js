@@ -5,17 +5,20 @@
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">
-        <h3 class="panel-title">Panel title</h3>
+        <h3 class="panel-title">{{nbRound}}</h3>
     </div>
     <!-- Table -->
     <table class="table">
         <thead>
             <tr>
                 <th>#</th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th ng-repeat="player in Game.players">{{player.name}}</th>
             </tr>
-        </thead>`
+        </thead>
+        <tbody>
+            <tr ng-repeat="round in Game.rounds">
+                <td></td>
+            </tr>
+        </tbody>
     </table>
 </div>

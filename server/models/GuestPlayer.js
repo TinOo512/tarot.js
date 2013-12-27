@@ -3,10 +3,9 @@ if (typeof define !== 'function') {
 }
 define([
 ], function () {
-    var Player = {
-        name: null,
-        password: null
+    function GuestPlayer() {
+        this.name = null;
     }
 
-    return Player;
+    return GuestPlayer;
 });

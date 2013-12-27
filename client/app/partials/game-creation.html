@@ -6,11 +6,11 @@
     <div ng-repeat="j in range[$index]" class="col-md-4">
         <div class="thumbnail">
             <img ng-src="img/default-avatar.png" alt="">
-            <div class="caption">
+            <div ng-switch on="j" class="caption">
                 <label for="username{{j+1}}">Nom du joueur {{j+1}}</label>
-                <input ng-model="Game.players[j].name" required type="text" class="form-control" id="username{{j+1}}" placeholder="Nom du joueur {{j+1}}">
-                <input ng-if="j == 0" ng-model="Game.players[j].password" required type="password" class="form-control" id="password" placeholder="Mot de passe">
-
+                <input ng-switch-when="0" ng-model="Game.player.name" required type="text" class="form-control" id="username{{j+1}}" placeholder="Nom du joueur {{j+1}}">
+                <input ng-switch-when="0" ng-model="Game.player.password" required type="password" class="form-control" id="password" placeholder="Mot de passe">
+                <input ng-switch-default ng-model="Game.guestPlayers[j-1].name" required type="text" class="form-control" id="username{{j+1}}" placeholder="Nom du joueur {{j+1}}">
             </div>
         </div>
     </div>

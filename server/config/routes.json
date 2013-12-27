@@ -1,18 +1,23 @@
 {
     "routes" :{
-    "controllers" :{
-    },
-    "sockets" :{
-        "index" :{
-            "indexAction" :{
-                "path":"index/index"
-            }
+        "controllers" :{
         },
-        "player" :{
-            "addUserAction" :{
-                "path":"player/add-user"
+        "sockets" :{
+            "index" :{
+                "indexAction" :{
+                    "path":"index/index"
+                }
+            },
+            "player" :{
+                "addPlayerAction" :{
+                    "path":"player/add-player"
+                }
+            },
+            "game" :{
+                "addGameAction" :{
+                    "path":"player/add-game"
+                }
             }
         }
     }
-}
 }

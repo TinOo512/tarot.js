@@ -6,9 +6,9 @@ var playerModel = angular.module('PlayerModel', []);
 
 playerModel.service('Player', [
     function() {
-        function Player() {
-            this.name = null;
-            this.password = null;
+        var Player = {
+            name: null,
+            password: null
         }
 
         return Player;

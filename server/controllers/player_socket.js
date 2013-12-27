@@ -5,10 +5,9 @@ define([
     '../lib/mongoose'
 ], function (mongoose) {
     var Socket = {
-        addUserAction: function(req) {
+        addPlayerAction: function(req) {
             var Player = mongoose.models.player;
 
-            // on recupere uniquement le player 1
             var player = new Player(req.data.player);
             player.save();
         }
