@@ -15,4 +15,4 @@ Thumbs.db
 
 # node.js dependencies #
 ########################
-node_modules
+./server/node_modules
