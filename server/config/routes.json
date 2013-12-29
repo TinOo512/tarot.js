@@ -16,6 +16,9 @@
             "game" :{
                 "addGameAction" :{
                     "path":"player/add-game"
+                },
+                "getGameAction" :{
+                    "path":"player/get-game"
                 }
             }
         }

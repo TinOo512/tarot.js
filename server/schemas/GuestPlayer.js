@@ -4,12 +4,18 @@ if (typeof define !== 'function') {
 define([
     'mongoose'
 ], function (Mongoose) {
-    var Schema = Mongoose.Schema;
+    /*var Schema = Mongoose.Schema;
 
     var GuestPlayerSchema = new Schema({
         id_player: { type: Schema.Types.ObjectId, required: true },
-        name:  { type: String, required: true }
+        name: { type: String, required: true }
     });
 
-    return GuestPlayerSchema;
+    return GuestPlayerSchema;*/
+
+    var GuestPlayers = {
+        name: { type: String, required: true }
+    }
+
+    return GuestPlayers;
 });

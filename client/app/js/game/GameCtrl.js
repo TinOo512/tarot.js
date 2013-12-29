@@ -71,6 +71,8 @@ gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', 'G
     function($scope, $rootScope, $routeParams, Game, Socket) {
         $rootScope.active = 'game';
 
+        Socket.emit('player/get-game', {});
+
         $scope.Game = Game;
         $scope.nbRound = Game.rounds.length;
     }]);

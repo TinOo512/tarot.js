@@ -16,9 +16,10 @@ define([
 
             //chargement des models
             this.models = {
+                'tarot': this.instance.model('Tarot', require(__dirname + '/../schemas/Tarot'))/*,
                 'player': this.instance.model('Player', require(__dirname + '/../schemas/Player')),
                 'guestPlayer': this.instance.model('GuestPlayer', require(__dirname + '/../schemas/GuestPlayer')),
-                'game': this.instance.model('Game', require(__dirname + '/../schemas/Game'))
+                'game': this.instance.model('Game', require(__dirname + '/../schemas/Game'))*/
             }
         }
     }

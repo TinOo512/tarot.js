@@ -4,12 +4,19 @@ if (typeof define !== 'function') {
 define([
     'mongoose'
 ], function (Mongoose) {
-    var Schema = Mongoose.Schema;
+    /*var Schema = Mongoose.Schema;
 
     var PlayerSchema = new Schema({
         name:  { type: String, required: true, unique: true },
         password: { type: String }
     });
 
-    return PlayerSchema;
+    return PlayerSchema;*/
+
+    var Player = {
+        name:  { type: String, required: true, unique: true },
+        password: { type: String }
+    };
+
+    return Player;
 });
