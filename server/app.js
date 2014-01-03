@@ -46,14 +46,20 @@ define([
     app.use(express.static(__dirname + '/../client/app'));
 
     // session support
-    app.use(express.cookieParser('79vm86SUm34c3ZSxtc3aSPnn8DReU9Q4'));
-    app.use(express.session({secret: '79vm86SUm34c3ZSxtc3aSPnn8DReU9Q4'}));
+    app.use(express.cookieParser());
+    //var RedisStore = require('connect-redis')(express);
+    var MongoStore = require('connect-mongo')(express);
+    app.use(express.session({
+        //store: new RedisStore({ host: 'localhost', port: 6379 }),
+        store: new MongoStore({ url: 'mongodb://localhost/tarot-js' }),
+        secret: '79vm86SUm34c3ZSxtc3aSPnn8DReU9Q4'
+    }));
 
     // parse request bodies (req.body)
     app.use(express.bodyParser());
 
     // support _method (PUT in forms etc)
-    // app.use(express.methodOverride());
+    app.use(express.methodOverride());
 
     // expose the "messages" local variable when views are rendered
     app.use(function(req, res, next){

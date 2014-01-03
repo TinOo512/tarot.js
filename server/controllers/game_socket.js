@@ -18,7 +18,8 @@ define([
     }
 
     function pushGame(res, guestPlayers) {
-        if (!res.hasUnfinishedGame()) {
+        //todo: opti, ajouter le status dans la request et check le length
+        if (!res.getUnfinishedGame()) {
             var game = {};
             game.guest_players = guestPlayers;
             game.status = true;
@@ -34,7 +35,7 @@ define([
         addGameAction: function(req) {
             var Tarot = mongoose.models.tarot;
 
-            var player = req.data.game.player;
+            var player = req.data.player;
             var guestPlayers = req.data.game.guestPlayers;
 
             Tarot.findOne({player: player}, function (err, res) {
@@ -48,6 +49,7 @@ define([
                         if (res) {
                             // on ajoute l'id en session
                             req.session._id = res._id;
+                            req.session.save();
 
                             // on ajoute les guestPlayers
                             pushGuestPlayers(res, guestPlayers);
@@ -57,6 +59,7 @@ define([
                 } else {
                     // on ajoute l'id en session
                     req.session._id = res._id;
+                    req.session.save();
 
                     // on ajoute les guestPlayers
                     pushGuestPlayers(res, guestPlayers);
@@ -69,8 +72,8 @@ define([
 
             Tarot.findById(req.session._id, function (err, res) {
                 if (res) {
-                    debugger;
-                    req.io.emit('game/get-game', {data: res.toJSON()});
+                    var game = {player: res.player.toObject(), game: res.getUnfinishedGame().toObject()}
+                    req.io.emit('game/get-game', game);
                 }
             });
         }

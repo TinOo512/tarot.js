@@ -18,10 +18,12 @@ define([
     return GameSchema;*/
 
     var Game = {
+        status: { type: Boolean, required: true },
         guest_players: [
             GuestPlayer
         ],
-        status: { type: Boolean, required: true }
+        rounds: [
+        ]
      }
 
      return Game;

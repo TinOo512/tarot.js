@@ -38,11 +38,11 @@ define([
     }
 
     //Game Methods
-    TarotSchema.methods.hasUnfinishedGame = function () {
+    TarotSchema.methods.getUnfinishedGame = function () {
         var result = false;
         for (var i=0 ; i<this.games.length ; i++) {
             if (this.games[i].status) {
-                result = true;
+                result = this.games[i];
                 break;
             }
         }

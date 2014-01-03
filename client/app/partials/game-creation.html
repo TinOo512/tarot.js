@@ -8,8 +8,8 @@
             <img ng-src="img/default-avatar.png" alt="">
             <div ng-switch on="j" class="caption">
                 <label for="username{{j+1}}">Nom du joueur {{j+1}}</label>
-                <input ng-switch-when="0" ng-model="Game.player.name" required type="text" class="form-control" id="username{{j+1}}" placeholder="Nom du joueur {{j+1}}">
-                <input ng-switch-when="0" ng-model="Game.player.password" required type="password" class="form-control" id="password" placeholder="Mot de passe">
+                <input ng-switch-when="0" ng-model="Player.name" required type="text" class="form-control" id="username{{j+1}}" placeholder="Nom du joueur {{j+1}}">
+                <input ng-switch-when="0" ng-model="Player.password" required type="password" class="form-control" id="password" placeholder="Mot de passe">
                 <input ng-switch-default ng-model="Game.guestPlayers[j-1].name" required type="text" class="form-control" id="username{{j+1}}" placeholder="Nom du joueur {{j+1}}">
             </div>
         </div>

@@ -2,17 +2,17 @@
 
 /* Game Model */
 
-var gameModel = angular.module('GameModel', ['PlayerModel', 'GuestPlayerModel']);
+var gameModel = angular.module('GameModel', ['GuestPlayerModel']);
 
-gameModel.service('Game', ['Player', 'GuestPlayer',
-    function(Player, GuestPlayer) {
+gameModel.service('Game', ['GuestPlayer',
+    function(GuestPlayer) {
         var model = {
             init: function(nbPlayers) {
                 for (var i=0 ; i<nbPlayers-1 ; i++) {
                     this.guestPlayers[i] = new GuestPlayer();
                 }
             },
-            player: Player,
+            status: null,
             guestPlayers: [],
             rounds:[]
         }
