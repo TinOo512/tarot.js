@@ -8,10 +8,6 @@ define([
 
     var Socket = {
         addPlayerAction: function(req) {
-            var Player = mongoose.models.player;
-
-            var player = new Player(req.data.player);
-            player.save();
         }
     };
     return Socket;

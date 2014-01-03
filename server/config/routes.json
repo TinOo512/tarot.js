@@ -15,10 +15,10 @@
             },
             "game" :{
                 "addGameAction" :{
-                    "path":"player/add-game"
+                    "path":"game/add-game"
                 },
                 "getGameAction" :{
-                    "path":"player/get-game"
+                    "path":"game/get-game"
                 }
             }
         }

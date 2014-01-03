@@ -68,8 +68,10 @@ define([
             var Tarot = mongoose.models.tarot;
 
             Tarot.findById(req.session._id, function (err, res) {
-
-                debugger;
+                if (res) {
+                    debugger;
+                    req.io.emit('game/get-game', {data: res.toJSON()});
+                }
             });
         }
     };
