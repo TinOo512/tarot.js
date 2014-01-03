@@ -10,6 +10,8 @@ define([
     './lib/mongoose',
     './lib/boot'
 ], function (express, ejs, mongoose, boot) {
+    'use strict';
+
     var app = express().http().io();
 
     // settings

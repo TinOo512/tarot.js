@@ -4,6 +4,8 @@ if (typeof define !== 'function') {
 define([
     'mongoose'
 ], function (Mongoose) {
+    'use strict';
+
     var mongoose = {
         instance: null,
         models: null,

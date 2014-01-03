@@ -3,6 +3,8 @@ if (typeof define !== 'function') {
 }
 define([
 ], function () {
+    'use strict';
+
     var Socket = {
         indexAction: function(req) {
             console.log(req.data);

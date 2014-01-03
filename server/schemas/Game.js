@@ -5,6 +5,8 @@ define([
     'mongoose',
     './GuestPlayer'
 ], function (Mongoose, GuestPlayer) {
+    'use strict';
+
     /*var Schema = Mongoose.Schema;
 
     var GameSchema = new Schema({

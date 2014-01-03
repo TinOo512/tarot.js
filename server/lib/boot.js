@@ -5,6 +5,8 @@ define([
     'express.io',
     'fs'
 ], function (express, fs) {
+    'use strict';
+
     var routes = {
         route:function (parent, options) {
             var verbose = options.verbose;

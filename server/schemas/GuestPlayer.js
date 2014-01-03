@@ -4,6 +4,8 @@ if (typeof define !== 'function') {
 define([
     'mongoose'
 ], function (Mongoose) {
+    'use strict';
+
     /*var Schema = Mongoose.Schema;
 
     var GuestPlayerSchema = new Schema({

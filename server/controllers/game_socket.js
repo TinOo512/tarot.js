@@ -4,23 +4,30 @@ if (typeof define !== 'function') {
 define([
     '../lib/mongoose'
 ], function (mongoose) {
+    'use strict';
 
     function pushGuestPlayers(res, guestPlayers) {
         for (var i=0 ; i<guestPlayers.length ; i++) {
-            //todo: ne pas push les guestPlayers qui existe deja!
-            res.guest_players.push(guestPlayers[i]);
+            // on insert le guestPlayers si celui-ci n'existe pas deja
+            if (!res.hasGuestPlayer(guestPlayers[i])) {
+                res.guest_players.push(guestPlayers[i]);
+            }
         }
 
         pushGame(res, guestPlayers)
     }
 
     function pushGame(res, guestPlayers) {
-        var game = {};
-        game.guest_players = guestPlayers;
-        game.status = true;
-        res.games.push(game);
+        if (!res.hasUnfinishedGame()) {
+            var game = {};
+            game.guest_players = guestPlayers;
+            game.status = true;
+            res.games.push(game);
 
-        res.save();
+            res.save();
+        } else {
+            //todo: go to unfinished game!
+        }
     }
 
     var Socket = {
@@ -58,11 +65,12 @@ define([
         },
 
         getGameAction: function(req) {
-            var Game = mongoose.models.game;
+            var Tarot = mongoose.models.tarot;
 
-            /*Game.findOne({ $and: [{'id_player': req.session.player._id}, {'status': true}] }, function (err, res) {
+            Tarot.findById(req.session._id, function (err, res) {
+
                 debugger;
-            });*/
+            });
         }
     };
     return Socket;

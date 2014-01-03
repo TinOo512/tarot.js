@@ -4,6 +4,8 @@ if (typeof define !== 'function') {
 define([
     '../lib/mongoose'
 ], function (mongoose) {
+    'use strict';
+
     var Socket = {
         addPlayerAction: function(req) {
             var Player = mongoose.models.player;
