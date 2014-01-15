@@ -12,6 +12,10 @@ define([
                 req.io.respond(true);
             else
                 req.io.respond(false);
+        },
+
+        submitLogin: function(req){
+            req.io.respond(true);
         }
     };
 });
