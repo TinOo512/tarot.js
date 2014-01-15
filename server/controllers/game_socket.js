@@ -79,13 +79,14 @@ define([
 
             User.findOne({'games._id': req.session.game_id}, 'games', function (err, res) {
                 var response;
+                // si le model n'est pas null
                 if (res) {
-                    response = {success: true, game: res.games.toObject()}
+                    response = {success: true, game: res.games[0].toObject()}
 
                 } else {
                     response = {success: false};
                 }
-                req.io.respond(game);
+                req.io.respond(response);
             });
         },
 
@@ -93,6 +94,7 @@ define([
             var User = mongoose.models.user;
 
             User.findOne({'games._id': req.session.game_id}, 'games', function (err, res) {
+                // si le model n'est pas null
                 if (res) {
                     //todo: check si l'object est valide
                     res.games[0].rounds.push(req.data.round);

@@ -14,8 +14,15 @@ var tarotApp = angular.module('tarotApp', [
 
 tarotApp.run(['$rootScope', 'Socket', 'Player', function($rootScope, Socket, Player){
     $rootScope.Player = Player;
+
+    Socket.emit('player/get-player', {}, function (rep) {
+        if (rep.success)
+            $rootScope.Player = rep.player;
+        else
+            $rootScope.Player = Player;
+    });
+
     $rootScope.submitLogin = function(Player){
-        console.log('emit');
         Socket.emit('user/submit-login', {player:Player}, function (rep) {
             console.log(rep);
         });

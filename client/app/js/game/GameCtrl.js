@@ -6,6 +6,8 @@ var gameCtrl = angular.module('GameCtrl', ['PlayerModel', 'GameModel', 'RoundMod
 
 gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Player', 'Game', 'Socket',
     function($scope, $rootScope, $routeParams, $location, Player, Game, Socket) {
+        //todo: use the Player of the rootScope
+
         $rootScope.active = 'game';
         $scope.Player = Player;
         $scope.nbPlayers = $routeParams.nbPlayers;
@@ -68,12 +70,11 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
         }
     }]);
 
-gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Player', 'Game', 'Round', 'Socket',
-    function($scope, $rootScope, $routeParams, $location, Player, Game, Round, Socket) {
+gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Game', 'Round', 'Socket',
+    function($scope, $rootScope, $routeParams, $location, Game, Round, Socket) {
         $rootScope.active = 'game';
 
         function setScope() {
-            $scope.Player = Player;
             $scope.Game = Game;
             $scope.nbRound = Game.rounds.length;
         }
@@ -83,7 +84,6 @@ gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$
         if (Game.isEmpty()) {
             Socket.emit('game/get-game', {}, function (data) {
                 if (!data.success) return $location.path('/user/login');
-                Player = data.player;
                 Game = data.game;
                 setScope();
             });
