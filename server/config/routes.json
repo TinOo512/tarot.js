@@ -19,6 +19,9 @@
                 },
                 "getGameAction" :{
                     "path":"game/get-game"
+                },
+                "pushRoundAction" :{
+                    "path":"game/push-round"
                 }
             },
             "user" :{

@@ -6,7 +6,7 @@ define([
 ], function (mongoose) {
     'use strict';
 
-    function pushGuestPlayers(res, guestPlayers) {
+    function pushGuestPlayers(req, res, guestPlayers) {
         for (var i=0 ; i<guestPlayers.length ; i++) {
             // on insert le guestPlayers si celui-ci n'existe pas deja
             if (!res.hasGuestPlayer(guestPlayers[i])) {
@@ -14,19 +14,28 @@ define([
             }
         }
 
-        pushGame(res, guestPlayers)
+        pushGame(req, res, guestPlayers)
     }
 
-    function pushGame(res, guestPlayers) {
+    function pushGame(req, res, guestPlayers) {
         //todo: opti, ajouter le status dans la request et check le length
-        if (!res.getUnfinishedGame()) {
+        var unfinishedGame = res.getUnfinishedGame();
+        if (!unfinishedGame) {
             var game = {};
             game.guestPlayers = guestPlayers;
             game.status = true;
             res.games.push(game);
 
-            res.save();
+            res.save(function (err, res, numberAffected) {
+                // si la game est bien insert
+                if (res) {
+                    req.session.game_id = res.games[res.games.length-1]._id;
+                    req.session.save();
+                }
+            });
         } else {
+            req.session.game_id = unfinishedGame._id;
+            req.session.save();
             //todo: go to unfinished game!
         }
     }
@@ -49,20 +58,18 @@ define([
                         if (res) {
                             // on ajoute l'id en session
                             req.session._id = res._id;
-                            req.session.save();
 
                             // on ajoute les guestPlayers
-                            pushGuestPlayers(res, guestPlayers);
+                            pushGuestPlayers(req, res, guestPlayers);
                         }
                     });
                 // si le model n'est pas null
                 } else {
                     // on ajoute l'id en session
                     req.session._id = res._id;
-                    req.session.save();
 
                     // on ajoute les guestPlayers
-                    pushGuestPlayers(res, guestPlayers);
+                    pushGuestPlayers(req, res, guestPlayers);
                 }
             });
         },
@@ -70,10 +77,34 @@ define([
         getGameAction: function(req) {
             var User = mongoose.models.user;
 
-            User.findById(req.session._id, function (err, res) {
+            User.findOne({'games._id': req.session.game_id}, 'games', function (err, res) {
+                var response;
                 if (res) {
-                    var game = {player: res.player.toObject(), game: res.getUnfinishedGame().toObject()}
-                    req.io.respond(game);
+                    response = {success: true, game: res.games.toObject()}
+
+                } else {
+                    response = {success: false};
+                }
+                req.io.respond(game);
+            });
+        },
+
+        pushRoundAction: function (req) {
+            var User = mongoose.models.user;
+
+            User.findOne({'games._id': req.session.game_id}, 'games', function (err, res) {
+                if (res) {
+                    //todo: check si l'object est valide
+                    res.games[0].rounds.push(req.data.round);
+
+                    res.save(function (err, res, numberAffected) {
+                        // si la round est bien insert
+                        if (res) {
+                            req.io.respond({success: true});
+                        } else {
+                            req.io.respond({success: false});
+                        }
+                    });
                 }
             });
         }

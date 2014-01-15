@@ -2,9 +2,9 @@ if (typeof define !== 'function') {
     var define = (require('amdefine'))(module);
 }
 define([
-    'mongoose',
-    './GuestPlayer'
-], function (Mongoose, GuestPlayer) {
+    './GuestPlayer',
+    './Round'
+], function (GuestPlayer, Round) {
     'use strict';
 
     /*var Schema = Mongoose.Schema;
@@ -19,11 +19,11 @@ define([
 
     var Game = {
         status: { type: Boolean, required: true },
-        nbPlayers: { type: String },
         guestPlayers: [
             GuestPlayer
         ],
         rounds: [
+            Round
         ]
      }
 

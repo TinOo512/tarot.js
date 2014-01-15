@@ -2,8 +2,7 @@ if (typeof define !== 'function') {
     var define = (require('amdefine'))(module);
 }
 define([
-    'mongoose'
-], function (Mongoose) {
+], function () {
     'use strict';
 
     /*var Schema = Mongoose.Schema;

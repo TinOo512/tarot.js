@@ -70,36 +70,37 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
 
 gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Player', 'Game', 'Round', 'Socket',
     function($scope, $rootScope, $routeParams, $location, Player, Game, Round, Socket) {
+        $rootScope.active = 'game';
 
-        Socket.emit('user/is-connected', {}, function(r){
-            if(r !== true) return $location.path('/user/login');
+        function setScope() {
+            $scope.Player = Player;
+            $scope.Game = Game;
+            $scope.nbRound = Game.rounds.length;
+        }
 
-            $scope.Round = new Round();
+        $scope.Round = new Round();
 
-            function setScope() {
-                $scope.Player = Player;
-                $scope.Game = Game;
-                $scope.nbRound = Game.rounds.length;
-            }
-
-            $rootScope.active = 'game';
-
+        if (Game.isEmpty()) {
             Socket.emit('game/get-game', {}, function (data) {
+                if (!data.success) return $location.path('/user/login');
                 Player = data.player;
                 Game = data.game;
                 setScope();
             });
-
+        } else {
             setScope();
+        }
 
-            $scope.submit = function(Round) {
-                if ($scope.donne_form.$valid) {
-                    // Submit as normal
-                    console.log('valid');
-                } else {
-                    console.log('notValid');
-                    $scope.donne_form.submitted = true;
-                }
+        $scope.submit = function(Round) {
+            if ($scope.donne_form.$valid) {
+                // Submit as normal
+                console.log('valid');
+                Socket.emit('game/push-round', {round: Round}, function (data) {
+                    debugger;
+                });
+            } else {
+                console.log('notValid');
+                $scope.donne_form.submitted = true;
             }
-        });
+        }
     }]);

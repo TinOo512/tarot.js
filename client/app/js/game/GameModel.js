@@ -14,7 +14,13 @@ gameModel.service('Game', ['GuestPlayer',
             },
             status: null,
             guestPlayers: [],
-            rounds:[]
+            rounds:[],
+            isEmpty: function () {
+                if (this.status === null && this.guestPlayers.length === 0 && this.rounds.length === 0)
+                    return true;
+                else
+                    return false;
+            }
         }
 
         return model;
