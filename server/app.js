@@ -51,7 +51,7 @@ define([
     var MongoStore = require('connect-mongo')(express);
     app.use(express.session({
         //store: new RedisStore({ host: 'localhost', port: 6379 }),
-        store: new MongoStore({ url: 'mongodb://localhost/tarot-js' }),
+        store: new MongoStore({ url: 'mongodb://localhost/tarot-js/tjs_sessions' }),
         secret: '79vm86SUm34c3ZSxtc3aSPnn8DReU9Q4'
     }));
 

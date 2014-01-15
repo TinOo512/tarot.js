@@ -33,18 +33,18 @@ define([
 
     var Socket = {
         addGameAction: function(req) {
-            var Tarot = mongoose.models.tarot;
+            var User = mongoose.models.user;
 
             var player = req.data.player;
             var guestPlayers = req.data.game.guestPlayers;
 
-            Tarot.findOne({player: player}, function (err, res) {
+            User.findOne({player: player}, function (err, res) {
                 // si le model est null
                 if (!res) {
                     // on insert un nouveau player
-                    var tarot = new Tarot()
-                    tarot.player = player;
-                    tarot.save(function (err, res, numberAffected) {
+                    var user = new User()
+                    user.player = player;
+                    user.save(function (err, res, numberAffected) {
                         // si le player est bien insert
                         if (res) {
                             // on ajoute l'id en session
@@ -68,9 +68,9 @@ define([
         },
 
         getGameAction: function(req) {
-            var Tarot = mongoose.models.tarot;
+            var User = mongoose.models.user;
 
-            Tarot.findById(req.session._id, function (err, res) {
+            User.findById(req.session._id, function (err, res) {
                 if (res) {
                     var game = {player: res.player.toObject(), game: res.getUnfinishedGame().toObject()}
                     req.io.respond(game);

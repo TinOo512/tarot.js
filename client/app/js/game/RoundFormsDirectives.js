@@ -9,8 +9,8 @@ roundFormsDirectives.directive('ngActive', function() {
     return {
         restrict: 'A',
         require: 'ngModel',
-        link: function(scope, iElement, iAttrs, form) {
-            iElement.on('click', function (evt) {
+        link: function(scope, iElement, iAttrs) {
+            iElement.on('click', function () {
                 var params = iAttrs.ngModel.split(".");
 
                 var clickedValue;

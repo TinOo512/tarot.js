@@ -11,7 +11,7 @@ define([
 
     var Schema = Mongoose.Schema;
 
-    var TarotSchema = new Schema({
+    var UserSchema = new Schema({
         player: Player,
         guestPlayers: [
             GuestPlayer
@@ -24,7 +24,7 @@ define([
     //Player Methods
 
     //GuestPlayer Methods
-    TarotSchema.methods.hasGuestPlayer = function (guestPlayer) {
+    UserSchema.methods.hasGuestPlayer = function (guestPlayer) {
         var result = false;
         for (var i=0 ; i<this.guestPlayers.length ; i++) {
             if (this.guestPlayers[i].name == guestPlayer.name) {
@@ -38,7 +38,7 @@ define([
     }
 
     //Game Methods
-    TarotSchema.methods.getUnfinishedGame = function () {
+    UserSchema.methods.getUnfinishedGame = function () {
         var result = false;
         for (var i=0 ; i<this.games.length ; i++) {
             if (this.games[i].status) {
@@ -49,5 +49,5 @@ define([
         return result;
     }
 
-    return TarotSchema;
+    return UserSchema;
 });

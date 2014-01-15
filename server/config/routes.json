@@ -20,6 +20,11 @@
                 "getGameAction" :{
                     "path":"game/get-game"
                 }
+            },
+            "user" :{
+                "isConnected" :{
+                    "path":"user/is-connected"
+                }
             }
         }
     }

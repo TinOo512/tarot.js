@@ -32,7 +32,7 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
 
             $scope.submit = function(Game) {
                 Socket.emit('game/add-game', { player: Player, game: Game });
-                $location.path('/game/panel');
+                return $location.path('/game/panel');
             };
 
         }
@@ -48,7 +48,7 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
 
             $scope.submit = function(Game) {
                 Socket.emit('game/add-game', { player: Player, game: Game });
-                $location.path('/game/panel');
+                return $location.path('/game/panel');
             };
         }
 
@@ -63,39 +63,43 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
 
             $scope.submit = function(Game) {
                 Socket.emit('game/add-game', { player: Player, game: Game });
-                $location.path('/game/panel');
+                return $location.path('/game/panel');
             };
         }
     }]);
 
-gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', 'Player', 'Game', 'Round', 'Socket',
-    function($scope, $rootScope, $routeParams, Player, Game, Round, Socket) {
-        $scope.Round = new Round();
+gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Player', 'Game', 'Round', 'Socket',
+    function($scope, $rootScope, $routeParams, $location, Player, Game, Round, Socket) {
 
-        function setScope() {
-            $scope.Player = Player;
-            $scope.Game = Game;
-            $scope.nbRound = Game.rounds.length;
-        }
+        Socket.emit('user/is-connected', {}, function(r){
+            if(r !== true) return $location.path('/user/login');
 
-        $rootScope.active = 'game';
+            $scope.Round = new Round();
 
-        Socket.emit('game/get-game', {}, function (data) {
-            Player = data.player;
-            Game = data.game;
+            function setScope() {
+                $scope.Player = Player;
+                $scope.Game = Game;
+                $scope.nbRound = Game.rounds.length;
+            }
+
+            $rootScope.active = 'game';
+
+            Socket.emit('game/get-game', {}, function (data) {
+                Player = data.player;
+                Game = data.game;
+                setScope();
+            });
 
             setScope();
-        });
 
-        setScope();
-
-        $scope.submit = function(Round) {
-            if ($scope.donne_form.$valid) {
-                // Submit as normal
-                console.log('valid');
-            } else {
-                console.log('notValid');
-                $scope.donne_form.submitted = true;
+            $scope.submit = function(Round) {
+                if ($scope.donne_form.$valid) {
+                    // Submit as normal
+                    console.log('valid');
+                } else {
+                    console.log('notValid');
+                    $scope.donne_form.submitted = true;
+                }
             }
-        }
+        });
     }]);
