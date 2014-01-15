@@ -13,7 +13,7 @@ define([
 
     var TarotSchema = new Schema({
         player: Player,
-        guest_players: [
+        guestPlayers: [
             GuestPlayer
         ],
         games: [
@@ -26,8 +26,8 @@ define([
     //GuestPlayer Methods
     TarotSchema.methods.hasGuestPlayer = function (guestPlayer) {
         var result = false;
-        for (var i=0 ; i<this.guest_players.length ; i++) {
-            if (this.guest_players[i].name == guestPlayer.name) {
+        for (var i=0 ; i<this.guestPlayers.length ; i++) {
+            if (this.guestPlayers[i].name == guestPlayer.name) {
                 result = true;
                 break;
             } else {

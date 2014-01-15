@@ -48,5 +48,33 @@ roundModel.service('Round', [
             this.defenseScore = null;
         }
 
+        /**
+         * GETTER
+         */
+        Round.prototype.setDealer = function(dealer) {
+            this.dealer = dealer;
+        };
+        Round.prototype.setContract = function(contract) {
+            this.contract = contract;
+        };
+        Round.prototype.setTaker = function(taker) {
+            this.taker = taker;
+        };
+        Round.prototype.setCalledColor = function(calledColor) {
+            this.calledColor = calledColor;
+        };
+        Round.prototype.setCalledPlayer = function(calledPlayer) {
+            this.calledPlayer = calledPlayer;
+        };
+        Round.prototype.setNbOudler = function(nbOudler) {
+            this.nbOudler = nbOudler;
+        };
+        Round.prototype.setAttackScore = function(attackScore) {
+            this.attackScore = attackScore;
+        };
+        Round.prototype.setDefenseScore = function(defenseScore) {
+            this.defenseScore = defenseScore;
+        };
+
         return Round;
     }]);

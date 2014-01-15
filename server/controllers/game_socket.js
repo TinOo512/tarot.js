@@ -10,7 +10,7 @@ define([
         for (var i=0 ; i<guestPlayers.length ; i++) {
             // on insert le guestPlayers si celui-ci n'existe pas deja
             if (!res.hasGuestPlayer(guestPlayers[i])) {
-                res.guest_players.push(guestPlayers[i]);
+                res.guestPlayers.push(guestPlayers[i]);
             }
         }
 
@@ -21,7 +21,7 @@ define([
         //todo: opti, ajouter le status dans la request et check le length
         if (!res.getUnfinishedGame()) {
             var game = {};
-            game.guest_players = guestPlayers;
+            game.guestPlayers = guestPlayers;
             game.status = true;
             res.games.push(game);
 
@@ -73,7 +73,7 @@ define([
             Tarot.findById(req.session._id, function (err, res) {
                 if (res) {
                     var game = {player: res.player.toObject(), game: res.getUnfinishedGame().toObject()}
-                    req.io.emit('game/get-game', game);
+                    req.io.respond(game);
                 }
             });
         }

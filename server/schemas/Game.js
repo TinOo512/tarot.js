@@ -19,7 +19,8 @@ define([
 
     var Game = {
         status: { type: Boolean, required: true },
-        guest_players: [
+        nbPlayers: { type: String },
+        guestPlayers: [
             GuestPlayer
         ],
         rounds: [

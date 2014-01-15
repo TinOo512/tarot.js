@@ -2,7 +2,7 @@
 
 /* Game Controllers */
 
-var gameCtrl = angular.module('GameCtrl', ['PlayerModel', 'GameModel']);
+var gameCtrl = angular.module('GameCtrl', ['PlayerModel', 'GameModel', 'RoundModel', 'RoundFormsDirectives']);
 
 gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Player', 'Game', 'Socket',
     function($scope, $rootScope, $routeParams, $location, Player, Game, Socket) {
@@ -68,8 +68,10 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
         }
     }]);
 
-gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', 'Player', 'Game', 'Socket',
-    function($scope, $rootScope, $routeParams, Player, Game, Socket) {
+gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', 'Player', 'Game', 'Round', 'Socket',
+    function($scope, $rootScope, $routeParams, Player, Game, Round, Socket) {
+        $scope.Round = new Round();
+
         function setScope() {
             $scope.Player = Player;
             $scope.Game = Game;
@@ -78,8 +80,7 @@ gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', 'P
 
         $rootScope.active = 'game';
 
-        Socket.emit('game/get-game', {});
-        Socket.on('game/get-game', function (data) {
+        Socket.emit('game/get-game', {}, function (data) {
             Player = data.player;
             Game = data.game;
 
@@ -87,4 +88,14 @@ gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', 'P
         });
 
         setScope();
+
+        $scope.submit = function(Round) {
+            if ($scope.donne_form.$valid) {
+                // Submit as normal
+                console.log('valid');
+            } else {
+                console.log('notValid');
+                $scope.donne_form.submitted = true;
+            }
+        }
     }]);
