@@ -8,8 +8,19 @@ var tarotApp = angular.module('tarotApp', [
   'HomeCtrl',
   'GameCtrl',
   'GamesHistoryCtrl',
-  'AboutCtrl'
+  'AboutCtrl',
+  'PlayerModel'
 ]);
+
+tarotApp.run(['$rootScope', 'Socket', 'Player', function($rootScope, Socket, Player){
+    $rootScope.Player = Player;
+    $rootScope.submitLogin = function(Player){
+        console.log('emit');
+        Socket.emit('user/submit-login', {player:Player}, function (rep) {
+            console.log(rep);
+        });
+    };
+}]);
 
 tarotApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {templateUrl: 'partials/home.html', controller: 'HomeCtrl'});

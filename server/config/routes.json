@@ -22,6 +22,9 @@
                 }
             },
             "user" :{
+                "submitLogin" :{
+                    "path":"user/submit-login"
+                },
                 "isConnected" :{
                     "path":"user/is-connected"
                 }
