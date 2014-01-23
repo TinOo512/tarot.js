@@ -2,7 +2,7 @@
 
 /* Game Controllers */
 
-var gameCtrl = angular.module('GameCtrl', ['PlayerModel', 'GameModel', 'RoundModel', 'RoundFormsDirectives']);
+var gameCtrl = angular.module('GameCtrl', ['ConstsService', 'PlayerModel', 'GameModel', 'RoundModel', 'RoundFormsDirectives']);
 
 gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Player', 'Game', 'Socket',
     function($scope, $rootScope, $routeParams, $location, Player, Game, Socket) {
@@ -70,9 +70,10 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
         }
     }]);
 
-gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Game', 'Round', 'Socket',
-    function($scope, $rootScope, $routeParams, $location, Game, Round, Socket) {
+gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Consts', 'Game', 'Round', 'Socket',
+    function($scope, $rootScope, $routeParams, $location, Consts, Game, Round, Socket) {
         $rootScope.active = 'game';
+        $scope.Consts = Consts;
 
         function setScope() {
             $scope.Game = Game;
@@ -84,6 +85,13 @@ gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$
         if (Game.isEmpty()) {
             Socket.emit('game/get-game', {}, function (data) {
                 if (!data.success) return $location.path('/user/login');
+
+                // On instencie les objets rounds pour les methodes prototype
+                // todo : find better ?!
+                for (var i = 0, length = data.game.rounds.length ; i < length ; i++) {
+                    data.game.rounds[i] = new Round().init(data.game.rounds[i]);
+                }
+
                 Game = data.game;
                 setScope();
             });
@@ -95,6 +103,9 @@ gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$
             if ($scope.donne_form.$valid) {
                 // Submit as normal
                 console.log('valid');
+                debugger;
+                $scope.Game.rounds.push(Round);
+
                 Socket.emit('game/push-round', {round: Round}, function (data) {
                     debugger;
                 });

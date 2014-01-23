@@ -24,6 +24,8 @@
         <tbody>
             <tr ng-repeat="round in Game.rounds">
                 <td></td>
+                <td>{{round.getScore(Player.name)}}</td>
+                <td ng-repeat="guestPlayer in Game.guestPlayers">{{round.getScore(guestPlayer.name)}}</td>
             </tr>
         </tbody>
     </table>
@@ -54,12 +56,12 @@
                     <div class="panel-heading">Parametres principaux</div>
                     <div class="panel-body">
                         Contrat
-                        <input ng-model="Round.contract" required type="hidden" id="contract" name="contract">
-                        <div ng-model="Round.contract" ng-active class="btn-group btn-group-justified">
-                            <a ng-click="Round.setContract('prise')" data-value="prise" role="button" class="btn btn-default">Prise</a>
-                            <a ng-click="Round.setContract('garde')" data-value="garde" role="button" class="btn btn-default">Garde</a>
-                            <a ng-click="Round.setContract('garde_sans')" data-value="garde_sans" role="button" class="btn btn-default">Garde Sans</a>
-                            <a ng-click="Round.setContract('garde_contre')" data-value="garde_contre" role="button" class="btn btn-default">Garde Contre</a>
+                        <input ng-model="Round.contractMultiplier" required type="hidden" id="contractMultiplier" name="contractMultiplier">
+                        <div ng-model="Round.contractMultiplier" ng-active class="btn-group btn-group-justified">
+                            <a ng-click="Round.setContractMultiplier(Consts.PRISE_MULTIPLIER)" data-value="{{Consts.PRISE_MULTIPLIER}}" role="button" class="btn btn-default">Prise</a>
+                            <a ng-click="Round.setContractMultiplier(Consts.GARDE_MULTIPLIER)" data-value="{{Consts.GARDE_MULTIPLIER}}" role="button" class="btn btn-default">Garde</a>
+                            <a ng-click="Round.setContractMultiplier(Consts.GARDE_SANS_MULTIPLIER)" data-value="{{Consts.GARDE_SANS_MULTIPLIER}}" role="button" class="btn btn-default">Garde Sans</a>
+                            <a ng-click="Round.setContractMultiplier(Consts.GARDE_CONTRE_MULTIPLIER)" data-value="{{Consts.GARDE_CONTRE_MULTIPLIER}}" role="button" class="btn btn-default">Garde Contre</a>
                         </div>
                         Preneur
                         <input ng-model="Round.taker" required type="hidden" id="taker" name="taker">
@@ -91,11 +93,11 @@
                         </div>
                         <div class="form-group">
                             <label  class="control-label" for="defenseScore">Score d'attaque</label>
-                            <input integer ng-model="Round.attackScore" required type="text" class="form-control" id="attackScore" name="attackScore" placeholder="Score d'attaque">
+                            <input ng-integer-tarot-score ng-model="Round.attackScore" required type="text" class="form-control" id="attackScore" name="attackScore" placeholder="Score d'attaque">
                         </div>
                         <div class="form-group">
                             <label  class="control-label" for="defenseScore">Score de defense</label>
-                            <input integer ng-model="Round.defenseScore" required type="text" class="form-control" id="defenseScore" name="defenseScore" placeholder="Score de defense">
+                            <input ng-integer-tarot-score ng-model="Round.defenseScore" required type="text" class="form-control" id="defenseScore" name="defenseScore" placeholder="Score de defense">
                         </div>
                     </div>
                 </div>

@@ -81,8 +81,7 @@ define([
                 var response;
                 // si le model n'est pas null
                 if (res) {
-                    response = {success: true, game: res.games[0].toObject()}
-
+                    response = {success: true, game: res.games[0].toObject()};
                 } else {
                     response = {success: false};
                 }
@@ -96,7 +95,6 @@ define([
             User.findOne({'games._id': req.session.game_id}, 'games', function (err, res) {
                 // si le model n'est pas null
                 if (res) {
-                    //todo: check si l'object est valide
                     res.games[0].rounds.push(req.data.round);
 
                     res.save(function (err, res, numberAffected) {

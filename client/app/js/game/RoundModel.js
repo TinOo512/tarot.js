@@ -2,10 +2,15 @@
 
 /* Round Model */
 
-var roundModel = angular.module('RoundModel', []);
+var roundModel = angular.module('RoundModel', ['ConstsService']);
 
-roundModel.service('Round', [
-    function() {
+roundModel.service('Round', ['Consts',
+    function(Consts) {
+        //private
+        var ATTACK = 0;
+        var DEFENSE = 1;
+
+        //public
         function Round() {
             /**
              * le distributeur
@@ -13,9 +18,9 @@ roundModel.service('Round', [
             this.dealer = null;
 
             /**
-             * le contrat
+             * le coefficient du contrat
              */
-            this.contract = null;
+            this.contractMultiplier = null;
 
             /**
              * le preneur
@@ -46,7 +51,91 @@ roundModel.service('Round', [
              * le score de defense
              */
             this.defenseScore = null;
+
+            /**
+             * le nombre de point du petit au bout
+             */
+            this.petitAuBout = null;
+
+            /**
+             * le nombre de point de la misere
+             */
+            this.misere = null;
+
+            /**
+             * le nombre de point de la poignee
+             */
+            this.handful = null;
+
+            /**
+             * le nombre de point du chelem
+             */
+            this.slam = null;
         }
+
+        Round.prototype.init = function(Round) {
+            this.dealer = Round.dealer;
+            this.contractMultiplier = Round.contractMultiplier;
+            this.taker = Round.taker;
+            this.calledColor = Round.calledColor;
+            this.calledPlayer = Round.calledPlayer;
+            this.nbOudler = Round.nbOudler;
+            this.attackScore = Round.attackScore;
+            this.defenseScore = Round.defenseScore;
+            this.petitAuBout = Round.petitAuBout;
+            this.misere = Round.misere;
+            this.handful = Round.handful;
+            this.slam = Round.slam;
+
+            return this;
+        };
+
+        Round.prototype.getContract = function(type) {
+           switch (this.nbOudler) {
+               case 0:
+                   if (type === ATTACK) {
+                       return 56;
+                   } else {
+                       return 35;
+                   }
+                   break;
+               case 1:
+                   if (type === ATTACK) {
+                       return 51;
+                   } else {
+                       return 40;
+                   }
+                   break;
+               case 2:
+                   if (type === ATTACK) {
+                       return 41;
+                   } else {
+                       return 50;
+                   }
+                   break;
+               case 3:
+                   if (type === ATTACK) {
+                       return 36;
+                   } else {
+                       return 55;
+                   }
+                   break;
+           }
+        };
+
+        Round.prototype.getScore = function(player) {
+            console.log('getScore', this);
+            var score;
+            if (player === this.taker || player === this.calledPlayer) {
+                //attack team
+                score = (25 + (this.attackScore - this.getContract(ATTACK)) + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam;
+            } else {
+                //defense team
+                score = (25 + (this.attackScore - this.getContract(DEFENSE)) + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam;
+            }
+            console.log(score);
+            return score;
+        };
 
         /**
          * GETTER
@@ -54,8 +143,8 @@ roundModel.service('Round', [
         Round.prototype.setDealer = function(dealer) {
             this.dealer = dealer;
         };
-        Round.prototype.setContract = function(contract) {
-            this.contract = contract;
+        Round.prototype.setContractMultiplier = function(contractMultiplier) {
+            this.contractMultiplier = contractMultiplier;
         };
         Round.prototype.setTaker = function(taker) {
             this.taker = taker;
@@ -74,6 +163,18 @@ roundModel.service('Round', [
         };
         Round.prototype.setDefenseScore = function(defenseScore) {
             this.defenseScore = defenseScore;
+        };
+        Round.prototype.setPetitAuBout = function(petitAuBout) {
+            this.petitAuBout = petitAuBout;
+        };
+        Round.prototype.setMisere = function(misere) {
+            this.misere = misere;
+        };
+        Round.prototype.setHandful = function(handful) {
+            this.handful = handful;
+        };
+        Round.prototype.setSlam = function(slam) {
+            this.slam = slam;
         };
 
         return Round;
