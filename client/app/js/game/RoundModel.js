@@ -124,29 +124,34 @@ roundModel.service('Round', ['Consts',
         };
 
         Round.prototype.getScore = function(player) {
-            console.log('getScore', this);
             var score;
             if (player === this.taker) {
                 //taker
-                score = ((25 /*+ (this.attackScore - this.getContract(ATTACK))*/ + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam) * 2;
+                score = ((25 + Math.abs(Math.round((this.attackScore - this.getContract(ATTACK))/10)*10) + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam) * 2;
+                if (!this.didContract(ATTACK))
+                    score = score * -1;
             } else if (player === this.calledPlayer) {
                 //attack team
-                score = (25 /*+ (this.attackScore - this.getContract(ATTACK))*/ + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam;
+                score = (25 + Math.abs(Math.round((this.attackScore - this.getContract(ATTACK))/10)*10) + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam;
+                if (!this.didContract(ATTACK))
+                    score = score * -1;
             } else {
                 //defense team
-                score = -((25 /*+ (this.defenseScore - this.getContract(DEFENSE))*/ + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam);
+                score = (25 + Math.abs(Math.round((this.defenseScore - this.getContract(DEFENSE))/10)*10) + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam;
+                if (!this.didContract(DEFENSE))
+                    score = score * -1;
             }
-            console.log(score);
             return score;
         };
 
-        Round.prototype.doContract = function() {
-            //todo
-            if (true) {
-                return true;
+        Round.prototype.didContract = function(type) {
+            var result = false;
+            if (type === ATTACK) {
+                result = (this.attackScore >= this.getContract(type));
             } else {
-                return false;
+                result = (this.defenseScore >= this.getContract(type));
             }
+            return result;
         }
 
         /**
