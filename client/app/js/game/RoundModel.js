@@ -126,16 +126,28 @@ roundModel.service('Round', ['Consts',
         Round.prototype.getScore = function(player) {
             console.log('getScore', this);
             var score;
-            if (player === this.taker || player === this.calledPlayer) {
+            if (player === this.taker) {
+                //taker
+                score = ((25 /*+ (this.attackScore - this.getContract(ATTACK))*/ + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam) * 2;
+            } else if (player === this.calledPlayer) {
                 //attack team
-                score = (25 + (this.attackScore - this.getContract(ATTACK)) + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam;
+                score = (25 /*+ (this.attackScore - this.getContract(ATTACK))*/ + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam;
             } else {
                 //defense team
-                score = (25 + (this.attackScore - this.getContract(DEFENSE)) + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam;
+                score = -((25 /*+ (this.defenseScore - this.getContract(DEFENSE))*/ + this.petitAuBout) * this.contractMultiplier + this.handful + this.slam);
             }
             console.log(score);
             return score;
         };
+
+        Round.prototype.doContract = function() {
+            //todo
+            if (true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
         /**
          * GETTER

@@ -16,7 +16,11 @@ define([
         calledPlayer: { type: String, required: false },
         nbOudler: { type: Number, required: true },
         attackScore: { type: Number, required: true },
-        defenseScore: { type: Number, required: true }
+        defenseScore: { type: Number, required: true },
+        petitAuBout: { type: Number, required: false }, //todo: set required: true
+        misere: { type: Number, required: false }, //todo: set required: true
+        handful: { type: Number, required: false }, //todo: set required: true
+        slam: { type: Number, required: false } //todo: set required: true
     });
 
     return RoundSchema;
