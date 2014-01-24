@@ -9,7 +9,8 @@ var tarotApp = angular.module('tarotApp', [
   'GameCtrl',
   'GamesHistoryCtrl',
   'AboutCtrl',
-  'PlayerModel'
+  'PlayerModel',
+  'LoginFormDirectives'
 ]);
 
 tarotApp.run(['$rootScope', 'Socket', 'Player', function($rootScope, Socket, Player){
@@ -37,3 +38,5 @@ tarotApp.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/about', {templateUrl: 'partials/about.html', controller: 'AboutCtrl'});
   $routeProvider.otherwise({redirectTo: '/'});
 }]);
+
+

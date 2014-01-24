@@ -61,7 +61,7 @@
                             <span class="glyphicon glyphicon-user"></span>
                         </button>
                         <div id="login-content">
-                            <form class="form-inline" role="form" ng-submit="submitLogin(Player)">
+                            <form ng-form-login class="form-inline" role="form" ng-submit="submitLogin(Player)">
                                 <div class="form-group">
                                     <label class="sr-only" for="login">Pseudo</label>
                                     <input required ng-model="Player.name" type="text" class="form-control" id="login" placeholder="Pseudo">
@@ -108,6 +108,7 @@
     <script src="js/common/ConstsServices.js"></script>
     <script src="js/common/SocketService.js"></script>
     <script src="js/common/PlayerModel.js"></script>
+    <script src="js/common/LoginFormDirectives.js"></script>
     <script src="js/home/HomeCtrl.js"></script>
     <script src="js/game/GameCtrl.js"></script>
     <script src="js/game/GameModel.js"></script>

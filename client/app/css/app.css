@@ -59,13 +59,13 @@ code {
     z-index: 10;
     background-color: #F8F8F8;
     border: 1px solid #E7E7E7;
-    margin-left:-363px;
+    margin-left:-385px;
     padding: 7px;
-    width: 433px;
+    width: 455px;
 }
 
-#login-bar:hover > #login-content {
-    opacity: 1;
+#login-bar:hover #login-content {
+    opacity: 1 !important;
     transition: opacity 1s;
 }
 
