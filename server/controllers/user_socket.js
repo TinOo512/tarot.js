@@ -18,16 +18,13 @@ define([
         submitLogin: function(req){
             var User = mongoose.models.user;
             var player = req.data.player;
-            User.findOne({player: player}, function (err, res) {
+
+            User.findOne({player: player}, 'player', { lean: true }, function (err, res) {
                 // si le model est null
-                console.log(err)
                 if (res) {
-                    console.log('res ---> ', res);
-                    req.session.user = res.toObject();
-                    console.log('toObject ---> ', res.toObject());
-                    if(req.session.save()) {
+                    req.session.player = res.player;
+                    if(req.session.save())
                         return req.io.respond(true);
-                    }
                 }
                 return req.io.respond(false);
             });

@@ -77,11 +77,11 @@ define([
         getGameAction: function(req) {
             var User = mongoose.models.user;
 
-            User.findOne({'games._id': req.session.game_id}, 'games', function (err, res) {
+            User.findOne({'games._id': req.session.game_id}, 'games', { lean: true }, function (err, res) {
                 var response;
                 // si le model n'est pas null
                 if (res) {
-                    response = {success: true, game: res.games[0].toObject()};
+                    response = {success: true, game: res.games[0]};
                 } else {
                     response = {success: false};
                 }
