@@ -13,6 +13,8 @@ define([
     var GameSchema = new Schema({
         status: { type: Boolean, required: true },
         nbPlayers: { type: Number, required: true },
+        dateStart: { type: Date, require: true },
+        dateFinish: { type: Date },
         guestPlayers: [
             GuestPlayer
         ],

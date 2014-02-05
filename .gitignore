@@ -16,3 +16,7 @@ Thumbs.db
 # node.js dependencies #
 ########################
 server/node_modules
+
+# launcher windows #
+####################
+*.bat

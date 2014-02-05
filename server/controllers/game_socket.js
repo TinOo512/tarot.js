@@ -24,6 +24,8 @@ define([
             var game = {};
             game.guestPlayers = guestPlayers;
             game.status = true;
+            game.nbPlayers = game.guestPlayers.length+1;
+            game.dateStart = new Date();
             res.games.push(game);
 
             res.save(function (err, res, numberAffected) {
@@ -107,6 +109,15 @@ define([
                     });
                 }
             });
+        },
+
+        getHistoryAction: function(req) {
+            var User = mongoose.models.user;
+            User.findById(req.session._id, 'games', {lean : true} , function(err, res){
+                if(res){
+                    req.io.respond({success: true, games: res.games});
+                }
+            })
         }
     };
     return Socket;

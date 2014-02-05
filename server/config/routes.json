@@ -23,6 +23,9 @@
                 "getGameAction" :{
                     "path":"game/get-game"
                 },
+                "getHistoryAction" :{
+                    "path":"game/get-games"
+                },
                 "pushRoundAction" :{
                     "path":"game/push-round"
                 }
