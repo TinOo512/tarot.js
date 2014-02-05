@@ -7,7 +7,8 @@ var gameCtrl = angular.module('GameCtrl', ['ConstsService', 'PlayerModel', 'Game
 gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Player', 'Game', 'Socket',
     function($scope, $rootScope, $routeParams, $location, Player, Game, Socket) {
         //todo: use the Player of the rootScope
-
+        console.log('GameCreationCtrl');
+        debugger;
         $rootScope.active = 'game';
         $scope.Player = Player;
         $scope.nbPlayers = $routeParams.nbPlayers;
@@ -72,6 +73,7 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
 
 gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Consts', 'Game', 'Round', 'Socket',
     function($scope, $rootScope, $routeParams, $location, Consts, Game, Round, Socket) {
+        console.log('GamePanelCtrl');
         $rootScope.active = 'game';
         $scope.Consts = Consts;
 

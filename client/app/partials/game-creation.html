@@ -1,19 +1,21 @@
-<div class="page-header">
-    <h1>Tarot a {{nbPlayers}}</h1>
-</div>
-<form ng-submit="submit(Game)" role="form">
-<div ng-repeat="i in range[0]" class="row">
-    <div ng-repeat="j in range[$index]" class="col-md-4">
-        <div class="thumbnail">
-            <img ng-src="img/default-avatar.png" alt="">
-            <div ng-switch on="j" class="caption">
-                <label for="username{{j+1}}">Nom du joueur {{j+1}}</label>
-                <input ng-switch-when="0" ng-model="Player.name" required type="text" class="form-control" id="username{{j+1}}" placeholder="Nom du joueur {{j+1}}">
-                <input ng-switch-when="0" ng-model="Player.password" required type="password" class="form-control" id="password" placeholder="Mot de passe">
-                <input ng-switch-default ng-model="Game.guestPlayers[j-1].name" required type="text" class="form-control" id="username{{j+1}}" placeholder="Nom du joueur {{j+1}}">
+<div ng-controller="GameCreationCtrl as gameCreation">
+    <div class="page-header">
+        <h1>Tarot a {{nbPlayers}}</h1>
+    </div>
+    <form ng-submit="submit(Game)" role="form">
+    <div ng-repeat="i in range[0]" class="row">
+        <div ng-repeat="j in range[$index]" class="col-md-4">
+            <div class="thumbnail">
+                <img ng-src="img/default-avatar.png" alt="">
+                <div ng-switch on="j" class="caption">
+                    <label for="username{{j+1}}">Nom du joueur {{j+1}}</label>
+                    <input ng-switch-when="0" ng-model="Player.name" required type="text" class="form-control" id="username{{j+1}}" placeholder="Nom du joueur {{j+1}}">
+                    <input ng-switch-when="0" ng-model="Player.password" required type="password" class="form-control" id="password" placeholder="Mot de passe">
+                    <input ng-switch-default ng-model="Game.guestPlayers[j-1].name" required type="text" class="form-control" id="username{{j+1}}" placeholder="Nom du joueur {{j+1}}">
+                </div>
             </div>
         </div>
     </div>
+    <button type="submit" class="btn btn-default">Valider</button>
+    </form>
 </div>
-<button type="submit" class="btn btn-default">Valider</button>
-</form>

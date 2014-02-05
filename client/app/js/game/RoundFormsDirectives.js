@@ -50,14 +50,16 @@ roundFormsDirectives.directive('ngIntegerTarotScore', function() {
 
                     if (ctrl.$name === 'attackScore') {
                         scope.Round.defenseScore = MAX_VALUE - viewValue;
+                        iElement.parent().next().removeClass('has-error');
+                        iElement.parent().next().addClass('has-success');
                     } else {
                         scope.Round.attackScore = MAX_VALUE - viewValue;
+                        iElement.parent().prev().removeClass('has-error');
+                        iElement.parent().prev().addClass('has-success');
                     }
 
                     iElement.parent().removeClass('has-error');
                     iElement.parent().addClass('has-success');
-                    iElement.parent().next().removeClass('has-error');
-                    iElement.parent().next().addClass('has-success');
                     return viewValue;
                 } else {
                     // it is invalid, return undefined (no model update)
@@ -65,14 +67,16 @@ roundFormsDirectives.directive('ngIntegerTarotScore', function() {
 
                     if (ctrl.$name === 'attackScore') {
                         scope.Round.defenseScore = null;
+                        iElement.parent().next().removeClass('has-success');
+                        iElement.parent().next().addClass('has-error');
                     } else {
                         scope.Round.attackScore = null;
+                        iElement.parent().prev().removeClass('has-success');
+                        iElement.parent().prev().addClass('has-error');
                     }
 
                     iElement.parent().removeClass('has-success');
                     iElement.parent().addClass('has-error');
-                    iElement.parent().next().removeClass('has-success');
-                    iElement.parent().next().addClass('has-error');
                     return undefined;
                 }
             });

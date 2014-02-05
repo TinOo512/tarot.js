@@ -1,159 +1,161 @@
-<div class="page-header">
-    <h1>Game Panel //@todo edit title</h1>
-</div>
-
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">
-        <h3 class="panel-title">{{nbRound}}</h3>
-        <div style="float: right;" class="btn-group">
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModalDonne">Donne</button>
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModalPasse">Passe</button>
-        </div>
-        <div class="clearfix"></div>
+<div ng-controller="GamePanelCtrl as gamePanel">
+    <div class="page-header">
+        <h1>Game Panel //@todo edit title</h1>
     </div>
-    <!-- Table -->
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>{{Player.name}}</th>
-                <th ng-repeat="guestPlayer in Game.guestPlayers">{{guestPlayer.name}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="round in Game.rounds">
-                <td></td>
-                <td>{{round.getScore(Player.name)}}</td>
-                <td ng-repeat="guestPlayer in Game.guestPlayers">{{round.getScore(guestPlayer.name)}}</td>
-            </tr>
-        </tbody>
-    </table>
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h3 class="panel-title">{{nbRound}}</h3>
+            <div style="float: right;" class="btn-group">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModalDonne">Donne</button>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModalPasse">Passe</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!-- Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>{{Player.name}}</th>
+                    <th ng-repeat="guestPlayer in Game.guestPlayers">{{guestPlayer.name}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="round in Game.rounds">
+                    <td></td>
+                    <td>{{round.getScore(Player.name)}}</td>
+                    <td ng-repeat="guestPlayer in Game.guestPlayers">{{round.getScore(guestPlayer.name)}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal Donne -->
+    <div class="modal fade" id="myModalDonne" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form ng-submit="submit(Round)" name="donne_form" role="form" novalidate>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Nouvelle donne</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Distributeur</div>
+                        <div class="panel-body">
+                            <input ng-model="Round.dealer" required type="hidden" id="dealer" name="dealer">
+                            <div ng-model="Round.dealer" ng-active class="btn-group btn-group-justified">
+                                <a ng-click="Round.setDealer(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
+                                <a ng-click="Round.setDealer(guestPlayer.name)" data-value="{{guestPlayer.name}}" ng-repeat="guestPlayer in Game.guestPlayers" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Parametres principaux</div>
+                        <div class="panel-body">
+                            Contrat
+                            <input ng-model="Round.contractMultiplier" required type="hidden" id="contractMultiplier" name="contractMultiplier">
+                            <div ng-model="Round.contractMultiplier" ng-active class="btn-group btn-group-justified">
+                                <a ng-click="Round.setContractMultiplier(Consts.PRISE_MULTIPLIER)" data-value="{{Consts.PRISE_MULTIPLIER}}" role="button" class="btn btn-default">Prise</a>
+                                <a ng-click="Round.setContractMultiplier(Consts.GARDE_MULTIPLIER)" data-value="{{Consts.GARDE_MULTIPLIER}}" role="button" class="btn btn-default">Garde</a>
+                                <a ng-click="Round.setContractMultiplier(Consts.GARDE_SANS_MULTIPLIER)" data-value="{{Consts.GARDE_SANS_MULTIPLIER}}" role="button" class="btn btn-default">Garde Sans</a>
+                                <a ng-click="Round.setContractMultiplier(Consts.GARDE_CONTRE_MULTIPLIER)" data-value="{{Consts.GARDE_CONTRE_MULTIPLIER}}" role="button" class="btn btn-default">Garde Contre</a>
+                            </div>
+                            Preneur
+                            <input ng-model="Round.taker" required type="hidden" id="taker" name="taker">
+                            <div ng-model="Round.taker" ng-active class="btn-group btn-group-justified">
+                                <a ng-click="Round.setTaker(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
+                                <a ng-repeat="guestPlayer in Game.guestPlayers" data-value="{{guestPlayer.name}}" ng-click="Round.setTaker(guestPlayer.name)" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
+                            </div>
+                            <div ng-show="Game.nbPlayers == 5">
+                                Couleur appelee
+                                <input ng-model="Round.calledColor" required type="hidden" id="calledColor" name="calledColor">
+                                <div ng-model="Round.calledColor" ng-active class="btn-group btn-group-justified">
+                                    <a ng-click="Round.setCalledColor('clubs')" data-value="clubs"  role="button" class="btn btn-default"><img ng-src="img/clubs_16.png" alt=""></a>
+                                    <a ng-click="Round.setCalledColor('diamond')" data-value="diamond" role="button" class="btn btn-default"><img ng-src="img/diamond_16.png" alt=""></a>
+                                    <a ng-click="Round.setCalledColor('hearts')" data-value="hearts" role="button" class="btn btn-default"><img ng-src="img/hearts_16.png" alt=""></a>
+                                    <a ng-click="Round.setCalledColor('spades')" data-value="spades" role="button" class="btn btn-default"><img ng-src="img/spades_16.png" alt=""></a>
+                                </div>
+                                Joueur appele
+                                <input ng-model="Round.calledPlayer" required type="hidden" id="calledPlayer" name="calledPlayer">
+                                <div ng-model="Round.calledPlayer" ng-active class="btn-group btn-group-justified">
+                                    <a ng-click="Round.setCalledPlayer(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
+                                    <a ng-repeat="guestPlayer in Game.guestPlayers" data-value="{{guestPlayer.name}}" ng-click="Round.setCalledPlayer(guestPlayer.name)" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
+                                </div>
+                            </div>
+                            Nombre de bouts
+                            <input ng-model="Round.nbOudler" required type="hidden" id="nbOudler" name="nbOudler">
+                            <div ng-model="Round.nbOudler" ng-active class="btn-group btn-group-justified">
+                                <a ng-click="Round.setNbOudler(0)" data-value="0" role="button" class="btn btn-default">0</a>
+                                <a ng-click="Round.setNbOudler(1)" data-value="1" role="button" class="btn btn-default">1</a>
+                                <a ng-click="Round.setNbOudler(2)" data-value="2" role="button" class="btn btn-default">2</a>
+                                <a ng-click="Round.setNbOudler(3)" data-value="3" role="button" class="btn btn-default">3</a>
+                            </div>
+                            <div class="form-group">
+                                <label  class="control-label" for="defenseScore">Score d'attaque</label>
+                                <input ng-integer-tarot-score ng-model="Round.attackScore" required type="text" class="form-control" id="attackScore" name="attackScore" placeholder="Score d'attaque">
+                            </div>
+                            <div class="form-group">
+                                <label  class="control-label" for="defenseScore">Score de defense</label>
+                                <input ng-integer-tarot-score ng-model="Round.defenseScore" required type="text" class="form-control" id="defenseScore" name="defenseScore" placeholder="Score de defense">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="donne_form.$invalid && donne_form.submitted" class="alert alert-danger">
+                        <ul>
+                            <li ng-show="donne_form.dealer.$error.required">Veuillez selectionner le dealer.</li>
+                            <li ng-show="donne_form.contract.$error.required">Veuillez selectionner le contrat.</li>
+                            <li ng-show="donne_form.taker.$error.required">Veuillez selectionner la personne qui a pris.</li>
+                            <li ng-show="donne_form.calledColor.$error.required">Veuillez selectionner la couleur appele.</li>
+                            <li ng-show="donne_form.calledPlayer.$error.required">Veuillez selectionner la personne appele.</li>
+                            <li ng-show="donne_form.nbOudler.$error.required">Veuillez selectionner le nombre de bout.</li>
+                            <li ng-show="donne_form.attackScore.$error.required && !donne_form.attackScore.$error.integer">Veuillez rentrer le score de d'attaque.</li>
+                            <li ng-show="donne_form.attackScore.$error.integer">Veuillez rentrer un nombre pour le score d'attaque.</li>
+                            <li ng-show="donne_form.defenseScore.$error.required && !donne_form.defenseScore.$error.integer">Veuillez rentrer le score de defense.</li>
+                            <li ng-show="donne_form.defenseScore.$error.integer">Veuillez rentrer un nombre pour le score de defense.</li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Modal Passe -->
+    <div class="modal fade" id="myModalPasse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form role="passe_form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Nouvelle passe</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Distributeur</div>
+                        <div class="panel-body">
+                            <div ng-model="Round.dealer" ng-active class="btn-group btn-group-justified">
+                                <a ng-click="Round.setDealer(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
+                                <a ng-click="Round.setDealer(guestPlayer.name)" data-value="{{guestPlayer.name}}" ng-repeat="guestPlayer in Game.guestPlayers" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
-
-<!-- Modal Donne -->
-<div class="modal fade" id="myModalDonne" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form ng-submit="submit(Round)" name="donne_form" role="form" novalidate>
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Nouvelle donne</h4>
-            </div>
-            <div class="modal-body">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Distributeur</div>
-                    <div class="panel-body">
-                        <input ng-model="Round.dealer" required type="hidden" id="dealer" name="dealer">
-                        <div ng-model="Round.dealer" ng-active class="btn-group btn-group-justified">
-                            <a ng-click="Round.setDealer(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
-                            <a ng-click="Round.setDealer(guestPlayer.name)" data-value="{{guestPlayer.name}}" ng-repeat="guestPlayer in Game.guestPlayers" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">Parametres principaux</div>
-                    <div class="panel-body">
-                        Contrat
-                        <input ng-model="Round.contractMultiplier" required type="hidden" id="contractMultiplier" name="contractMultiplier">
-                        <div ng-model="Round.contractMultiplier" ng-active class="btn-group btn-group-justified">
-                            <a ng-click="Round.setContractMultiplier(Consts.PRISE_MULTIPLIER)" data-value="{{Consts.PRISE_MULTIPLIER}}" role="button" class="btn btn-default">Prise</a>
-                            <a ng-click="Round.setContractMultiplier(Consts.GARDE_MULTIPLIER)" data-value="{{Consts.GARDE_MULTIPLIER}}" role="button" class="btn btn-default">Garde</a>
-                            <a ng-click="Round.setContractMultiplier(Consts.GARDE_SANS_MULTIPLIER)" data-value="{{Consts.GARDE_SANS_MULTIPLIER}}" role="button" class="btn btn-default">Garde Sans</a>
-                            <a ng-click="Round.setContractMultiplier(Consts.GARDE_CONTRE_MULTIPLIER)" data-value="{{Consts.GARDE_CONTRE_MULTIPLIER}}" role="button" class="btn btn-default">Garde Contre</a>
-                        </div>
-                        Preneur
-                        <input ng-model="Round.taker" required type="hidden" id="taker" name="taker">
-                        <div ng-model="Round.taker" ng-active class="btn-group btn-group-justified">
-                            <a ng-click="Round.setTaker(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
-                            <a ng-repeat="guestPlayer in Game.guestPlayers" data-value="{{guestPlayer.name}}" ng-click="Round.setTaker(guestPlayer.name)" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
-                        </div>
-                        <div ng-show="Game.nbPlayers == 5">
-                            Couleur appelee
-                            <input ng-model="Round.calledColor" required type="hidden" id="calledColor" name="calledColor">
-                            <div ng-model="Round.calledColor" ng-active class="btn-group btn-group-justified">
-                                <a ng-click="Round.setCalledColor('clubs')" data-value="clubs"  role="button" class="btn btn-default"><img ng-src="img/clubs_16.png" alt=""></a>
-                                <a ng-click="Round.setCalledColor('diamond')" data-value="diamond" role="button" class="btn btn-default"><img ng-src="img/diamond_16.png" alt=""></a>
-                                <a ng-click="Round.setCalledColor('hearts')" data-value="hearts" role="button" class="btn btn-default"><img ng-src="img/hearts_16.png" alt=""></a>
-                                <a ng-click="Round.setCalledColor('spades')" data-value="spades" role="button" class="btn btn-default"><img ng-src="img/spades_16.png" alt=""></a>
-                            </div>
-                            Joueur appele
-                            <input ng-model="Round.calledPlayer" required type="hidden" id="calledPlayer" name="calledPlayer">
-                            <div ng-model="Round.calledPlayer" ng-active class="btn-group btn-group-justified">
-                                <a ng-click="Round.setCalledPlayer(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
-                                <a ng-repeat="guestPlayer in Game.guestPlayers" data-value="{{guestPlayer.name}}" ng-click="Round.setCalledPlayer(guestPlayer.name)" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
-                            </div>
-                        </div>
-                        Nombre de bouts
-                        <input ng-model="Round.nbOudler" required type="hidden" id="nbOudler" name="nbOudler">
-                        <div ng-model="Round.nbOudler" ng-active class="btn-group btn-group-justified">
-                            <a ng-click="Round.setNbOudler(0)" data-value="0" role="button" class="btn btn-default">0</a>
-                            <a ng-click="Round.setNbOudler(1)" data-value="1" role="button" class="btn btn-default">1</a>
-                            <a ng-click="Round.setNbOudler(2)" data-value="2" role="button" class="btn btn-default">2</a>
-                            <a ng-click="Round.setNbOudler(3)" data-value="3" role="button" class="btn btn-default">3</a>
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label" for="defenseScore">Score d'attaque</label>
-                            <input ng-integer-tarot-score ng-model="Round.attackScore" required type="text" class="form-control" id="attackScore" name="attackScore" placeholder="Score d'attaque">
-                        </div>
-                        <div class="form-group">
-                            <label  class="control-label" for="defenseScore">Score de defense</label>
-                            <input ng-integer-tarot-score ng-model="Round.defenseScore" required type="text" class="form-control" id="defenseScore" name="defenseScore" placeholder="Score de defense">
-                        </div>
-                    </div>
-                </div>
-
-                <div ng-show="donne_form.$invalid && donne_form.submitted" class="alert alert-danger">
-                    <ul>
-                        <li ng-show="donne_form.dealer.$error.required">Veuillez selectionner le dealer.</li>
-                        <li ng-show="donne_form.contract.$error.required">Veuillez selectionner le contrat.</li>
-                        <li ng-show="donne_form.taker.$error.required">Veuillez selectionner la personne qui a pris.</li>
-                        <li ng-show="donne_form.calledColor.$error.required">Veuillez selectionner la couleur appele.</li>
-                        <li ng-show="donne_form.calledPlayer.$error.required">Veuillez selectionner la personne appele.</li>
-                        <li ng-show="donne_form.nbOudler.$error.required">Veuillez selectionner le nombre de bout.</li>
-                        <li ng-show="donne_form.attackScore.$error.required && !donne_form.attackScore.$error.integer">Veuillez rentrer le score de d'attaque.</li>
-                        <li ng-show="donne_form.attackScore.$error.integer">Veuillez rentrer un nombre pour le score d'attaque.</li>
-                        <li ng-show="donne_form.defenseScore.$error.required && !donne_form.defenseScore.$error.integer">Veuillez rentrer le score de defense.</li>
-                        <li ng-show="donne_form.defenseScore.$error.integer">Veuillez rentrer un nombre pour le score de defense.</li>
-                    </ul>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                <button type="submit" class="btn btn-primary">Valider</button>
-            </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- Modal Passe -->
-<div class="modal fade" id="myModalPasse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form role="passe_form">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Nouvelle passe</h4>
-            </div>
-            <div class="modal-body">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Distributeur</div>
-                    <div class="panel-body">
-                        <div ng-model="Round.dealer" ng-active class="btn-group btn-group-justified">
-                            <a ng-click="Round.setDealer(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
-                            <a ng-click="Round.setDealer(guestPlayer.name)" data-value="{{guestPlayer.name}}" ng-repeat="guestPlayer in Game.guestPlayers" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                <button type="submit" class="btn btn-primary">Valider</button>
-            </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->

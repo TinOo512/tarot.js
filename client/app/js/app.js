@@ -5,6 +5,7 @@
 var tarotApp = angular.module('tarotApp', [
   'ngRoute',
   'SocketService',
+  'RootCtrl',
   'HomeCtrl',
   'GameCtrl',
   'GamesHistoryCtrl',
@@ -14,6 +15,7 @@ var tarotApp = angular.module('tarotApp', [
 ]);
 
 tarotApp.run(['$rootScope', 'Socket', 'Player', function($rootScope, Socket, Player){
+    console.log('TarotApp');
     $rootScope.Player = Player;
 
     Socket.emit('player/get-player', {}, function (rep) {
@@ -31,11 +33,11 @@ tarotApp.run(['$rootScope', 'Socket', 'Player', function($rootScope, Socket, Pla
 }]);
 
 tarotApp.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/', {templateUrl: 'partials/home.html', controller: 'HomeCtrl'});
-  $routeProvider.when('/game/creation/:nbPlayers', {templateUrl: 'partials/game-creation.html', controller: 'GameCreationCtrl'});
-  $routeProvider.when('/game/panel', {templateUrl: 'partials/game-panel.html', controller: 'GamePanelCtrl'});
-  $routeProvider.when('/games-history', {templateUrl: 'partials/games-history.html', controller: 'GamesHistoryCtrl'});
-  $routeProvider.when('/about', {templateUrl: 'partials/about.html', controller: 'AboutCtrl'});
+  $routeProvider.when('/', {templateUrl: 'partials/home.html'});
+  $routeProvider.when('/game/creation/:nbPlayers', {templateUrl: 'partials/game-creation.html'});
+  $routeProvider.when('/game/panel', {templateUrl: 'partials/game-panel.html'});
+  $routeProvider.when('/games-history', {templateUrl: 'partials/games-history.html'});
+  $routeProvider.when('/about', {templateUrl: 'partials/about.html'});
   $routeProvider.otherwise({redirectTo: '/'});
 }]);
 
