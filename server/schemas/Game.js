@@ -12,6 +12,7 @@ define([
 
     var GameSchema = new Schema({
         status: { type: Boolean, required: true },
+        nbPlayers: { type: Number, required: true },
         guestPlayers: [
             GuestPlayer
         ],

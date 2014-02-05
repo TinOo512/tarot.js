@@ -69,19 +69,21 @@
                             <a ng-click="Round.setTaker(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
                             <a ng-repeat="guestPlayer in Game.guestPlayers" data-value="{{guestPlayer.name}}" ng-click="Round.setTaker(guestPlayer.name)" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
                         </div>
-                        Couleur appelee
-                        <input ng-model="Round.calledColor" required type="hidden" id="calledColor" name="calledColor">
-                        <div ng-model="Round.calledColor" ng-active class="btn-group btn-group-justified">
-                            <a ng-click="Round.setCalledColor('clubs')" data-value="clubs"  role="button" class="btn btn-default"><img ng-src="img/clubs_16.png" alt=""></a>
-                            <a ng-click="Round.setCalledColor('diamond')" data-value="diamond" role="button" class="btn btn-default"><img ng-src="img/diamond_16.png" alt=""></a>
-                            <a ng-click="Round.setCalledColor('hearts')" data-value="hearts" role="button" class="btn btn-default"><img ng-src="img/hearts_16.png" alt=""></a>
-                            <a ng-click="Round.setCalledColor('spades')" data-value="spades" role="button" class="btn btn-default"><img ng-src="img/spades_16.png" alt=""></a>
-                        </div>
-                        Joueur appele
-                        <input ng-model="Round.calledPlayer" required type="hidden" id="calledPlayer" name="calledPlayer">
-                        <div ng-model="Round.calledPlayer" ng-active class="btn-group btn-group-justified">
-                            <a ng-click="Round.setCalledPlayer(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
-                            <a ng-repeat="guestPlayer in Game.guestPlayers" data-value="{{guestPlayer.name}}" ng-click="Round.setCalledPlayer(guestPlayer.name)" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
+                        <div ng-show="Game.nbPlayers == 5">
+                            Couleur appelee
+                            <input ng-model="Round.calledColor" required type="hidden" id="calledColor" name="calledColor">
+                            <div ng-model="Round.calledColor" ng-active class="btn-group btn-group-justified">
+                                <a ng-click="Round.setCalledColor('clubs')" data-value="clubs"  role="button" class="btn btn-default"><img ng-src="img/clubs_16.png" alt=""></a>
+                                <a ng-click="Round.setCalledColor('diamond')" data-value="diamond" role="button" class="btn btn-default"><img ng-src="img/diamond_16.png" alt=""></a>
+                                <a ng-click="Round.setCalledColor('hearts')" data-value="hearts" role="button" class="btn btn-default"><img ng-src="img/hearts_16.png" alt=""></a>
+                                <a ng-click="Round.setCalledColor('spades')" data-value="spades" role="button" class="btn btn-default"><img ng-src="img/spades_16.png" alt=""></a>
+                            </div>
+                            Joueur appele
+                            <input ng-model="Round.calledPlayer" required type="hidden" id="calledPlayer" name="calledPlayer">
+                            <div ng-model="Round.calledPlayer" ng-active class="btn-group btn-group-justified">
+                                <a ng-click="Round.setCalledPlayer(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
+                                <a ng-repeat="guestPlayer in Game.guestPlayers" data-value="{{guestPlayer.name}}" ng-click="Round.setCalledPlayer(guestPlayer.name)" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
+                            </div>
                         </div>
                         Nombre de bouts
                         <input ng-model="Round.nbOudler" required type="hidden" id="nbOudler" name="nbOudler">
