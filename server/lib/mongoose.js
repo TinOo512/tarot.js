@@ -18,7 +18,7 @@ define([
 
             //chargement des models
             this.models = {
-                'user': this.instance.model('tjs_tarot', require(__dirname + '/../schemas/User'))/*,
+                'tarot': this.instance.model('tjs_tarot', require(__dirname + '/../schemas/Tarot'))/*,
                 'player': this.instance.model('Player', require(__dirname + '/../schemas/Player')),
                 'guestPlayer': this.instance.model('GuestPlayer', require(__dirname + '/../schemas/GuestPlayer')),
                 'game': this.instance.model('Game', require(__dirname + '/../schemas/Game'))*/

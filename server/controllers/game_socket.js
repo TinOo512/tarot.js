@@ -6,29 +6,36 @@ define([
 ], function (mongoose) {
     'use strict';
 
-    function pushGuestPlayers(req, res, guestPlayers) {
-        for (var i=0 ; i<guestPlayers.length ; i++) {
+    var self = this;
+    this.user = null;
+    this.players = null;
+
+    function pushGuestPlayers(req, res) {
+        // on commence a 1 car l'offset 0 contient l'user
+        for (var i=1 ; i<self.players.length ; i++) {
             // on insert le guestPlayers si celui-ci n'existe pas deja
-            if (!res.hasGuestPlayer(guestPlayers[i])) {
-                res.guestPlayers.push(guestPlayers[i]);
+            if (!res.hasGuestPlayer(self.players[i])) {
+                res.guestPlayers.push(self.players[i]);
             }
         }
 
-        pushGame(req, res, guestPlayers)
+        pushGame(req, res);
     }
 
-    function pushGame(req, res, guestPlayers) {
+    function pushGame(req, res) {
         //todo: opti, ajouter le status dans la request et check le length
         var unfinishedGame = res.getUnfinishedGame();
         if (!unfinishedGame) {
             var game = {};
-            game.guestPlayers = guestPlayers;
+            game.players = self.players;
             game.status = true;
-            game.nbPlayers = game.guestPlayers.length+1;
+            game.nbPlayers = game.players.length;
             game.dateStart = new Date();
             res.games.push(game);
 
             res.save(function (err, res, numberAffected) {
+                debugger;
+                if (err) throw new Error("Mongoose - "+err.message);
                 // si la game est bien insert
                 if (res) {
                     req.session.game_id = res.games[res.games.length-1]._id;
@@ -44,25 +51,26 @@ define([
 
     var Socket = {
         addGameAction: function(req) {
-            var User = mongoose.models.user;
+            var Tarot = mongoose.models.tarot;
 
-            var player = req.data.player;
-            var guestPlayers = req.data.game.guestPlayers;
+            self.user = req.data.user;
+            self.players = req.data.game.players;
 
-            User.findOne({player: player}, function (err, res) {
+            Tarot.findOne({player: self.user}, function (err, res) {
                 // si le model est null
                 if (!res) {
                     // on insert un nouveau player
-                    var user = new User()
-                    user.player = player;
-                    user.save(function (err, res, numberAffected) {
+                    var tarot = new Tarot();
+                    tarot.user = self.user;
+                    tarot.save(function (err, res, numberAffected) {
+                        if (err) throw new Error("Mongoose - "+err.message);
                         // si le player est bien insert
                         if (res) {
                             // on ajoute l'id en session
                             req.session._id = res._id;
 
                             // on ajoute les guestPlayers
-                            pushGuestPlayers(req, res, guestPlayers);
+                            pushGuestPlayers(req, res);
                         }
                     });
                 // si le model n'est pas null
@@ -71,15 +79,16 @@ define([
                     req.session._id = res._id;
 
                     // on ajoute les guestPlayers
-                    pushGuestPlayers(req, res, guestPlayers);
+                    pushGuestPlayers(req, res);
                 }
             });
         },
 
         getGameAction: function(req) {
-            var User = mongoose.models.user;
+            var Tarot = mongoose.models.tarot;
 
-            User.findOne({'games._id': req.session.game_id}, 'games', { lean: true }, function (err, res) {
+            Tarot.findOne({'games._id': req.session.game_id}, 'games', { lean: true }, function (err, res) {
+                if (err) throw new Error("Mongoose - "+err.message);
                 var response;
                 // si le model n'est pas null
                 if (res) {
@@ -92,14 +101,16 @@ define([
         },
 
         pushRoundAction: function (req) {
-            var User = mongoose.models.user;
+            var Tarot = mongoose.models.tarot;
 
-            User.findOne({'games._id': req.session.game_id}, 'games', function (err, res) {
+            Tarot.findOne({'games._id': req.session.game_id}, 'games', function (err, res) {
+                if (err) throw new Error("Mongoose - "+err.message);
                 // si le model n'est pas null
                 if (res) {
                     res.games[0].rounds.push(req.data.round);
 
                     res.save(function (err, res, numberAffected) {
+                        if (err) throw new Error("Mongoose - "+err.message);
                         // si la round est bien insert
                         if (res) {
                             req.io.respond({success: true});
@@ -112,8 +123,8 @@ define([
         },
 
         getHistoryAction: function(req) {
-            var User = mongoose.models.user;
-            User.findById(req.session._id, 'games', {lean : true} , function(err, res){
+            var Tarot = mongoose.models.tarot;
+            Tarot.findById(req.session._id, 'games', {lean : true} , function(err, res){
                 if(res){
                     req.io.respond({success: true, games: res.games});
                 }

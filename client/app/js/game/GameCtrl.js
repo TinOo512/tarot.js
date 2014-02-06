@@ -2,30 +2,30 @@
 
 /* Game Controllers */
 
-var gameCtrl = angular.module('GameCtrl', ['ConstsService', 'PlayerModel', 'GameModel', 'RoundModel', 'RoundFormsDirectives']);
+var gameCtrl = angular.module('GameCtrl', ['ConstsService', 'UserModel', 'GameModel', 'RoundModel', 'RoundFormsDirectives']);
 
-gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Player', 'Game', 'Socket',
-    function($scope, $rootScope, $routeParams, $location, Player, Game, Socket) {
+gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'User', 'Game', 'Socket',
+    function($scope, $rootScope, $routeParams, $location, User, Game, Socket) {
         //todo: use the Player of the rootScope
         console.log('GameCreationCtrl');
-        debugger;
+
         $rootScope.active = 'game';
-        $scope.Player = Player;
+        $scope.User = User;
         $scope.nbPlayers = $routeParams.nbPlayers;
         var nbPlayers = parseInt($routeParams.nbPlayers);
         switch (nbPlayers) {
             case 3:
-                gameAtThreePlayers($scope, $location, Player, Game, Socket);
+                gameAtThreePlayers($scope, $location, User, Game, Socket);
                 break;
             case 4:
-                gameAtFourPlayers($scope, $location, Player, Game, Socket);
+                gameAtFourPlayers($scope, $location, User, Game, Socket);
                 break;
             case 5:
-                gameAtFivePlayers($scope, $location, Player, Game, Socket);
+                gameAtFivePlayers($scope, $location, User, Game, Socket);
                 break;
         }
 
-        function gameAtThreePlayers($scope, $location, Player, Game, Socket) {
+        function gameAtThreePlayers($scope, $location, User, Game, Socket) {
             console.log('3');
             $scope.range = [
                 [0, 1, 2]
@@ -34,13 +34,14 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
             $scope.Game = Game;
 
             $scope.submit = function(Game) {
-                Socket.emit('game/add-game', { player: Player, game: Game });
+                Game.addUser(User.name);
+                Socket.emit('game/add-game', { user: User, game: Game });
                 return $location.path('/game/panel');
             };
 
         }
 
-        function gameAtFourPlayers($scope, $location, Player, Game, Socket) {
+        function gameAtFourPlayers($scope, $location, User, Game, Socket) {
             console.log('4');
             $scope.range = [
                 [0, 1, 2],
@@ -50,12 +51,13 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
             $scope.Game = Game;
 
             $scope.submit = function(Game) {
-                Socket.emit('game/add-game', { player: Player, game: Game });
+                Game.addUser(User.name);
+                Socket.emit('game/add-game', { user: User, game: Game });
                 return $location.path('/game/panel');
             };
         }
 
-        function gameAtFivePlayers($scope, $location, Player, Game, Socket) {
+        function gameAtFivePlayers($scope, $location, User, Game, Socket) {
             console.log('5');
             $scope.range = [
                 [0, 1, 2],
@@ -65,7 +67,8 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
             $scope.Game = Game;
 
             $scope.submit = function(Game) {
-                Socket.emit('game/add-game', { player: Player, game: Game });
+                Game.addUser(User.name);
+                Socket.emit('game/add-game', { user: User, game: Game });
                 return $location.path('/game/panel');
             };
         }

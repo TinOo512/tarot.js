@@ -16,13 +16,14 @@ define([
         },
 
         submitLogin: function(req){
-            var User = mongoose.models.user;
-            var player = req.data.player;
+            var Tarot = mongoose.models.tarot;
+            var user = req.data.user;
 
-            User.findOne({player: player}, 'player', { lean: true }, function (err, res) {
+            Tarot.findOne({user: user}, 'user', { lean: true }, function (err, res) {
+                if (err) throw new Error("Mongoose - "+err.message);
                 // si le model est null
                 if (res) {
-                    req.session.player = res.player;
+                    req.session.user = res.user;
                     if(req.session.save())
                         return req.io.respond(true);
                 }

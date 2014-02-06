@@ -6,9 +6,8 @@ var playerModel = angular.module('PlayerModel', []);
 
 playerModel.service('Player', [
     function() {
-        var Player = {
-            name: null,
-            password: null
+        function Player(name, owner) {
+            this.name = (typeof name === "undefined") ? null : name;
         }
 
         return Player;

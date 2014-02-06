@@ -3,9 +3,9 @@ if (typeof define !== 'function') {
 }
 define([
     'mongoose',
-    './GuestPlayer',
+    './Player',
     './Round'
-], function (Mongoose, GuestPlayer, Round) {
+], function (Mongoose, Player, Round) {
     'use strict';
 
     var Schema = Mongoose.Schema;
@@ -15,8 +15,8 @@ define([
         nbPlayers: { type: Number, required: true },
         dateStart: { type: Date, require: true },
         dateFinish: { type: Date },
-        guestPlayers: [
-            GuestPlayer
+        players: [
+            Player
         ],
         rounds: [
             Round

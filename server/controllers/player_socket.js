@@ -6,17 +6,19 @@ define([
 ], function (mongoose) {
     'use strict';
 
+    //todo: rename file with user!
     var Socket = {
-        addPlayerAction: function(req) {
+        addUserAction: function(req) {
         },
 
-        getPlayerAction: function(req) {
-            var User = mongoose.models.user;
+        getUserAction: function(req) {
+            var Tarot = mongoose.models.tarot;
 
-            User.findById(req.session._id, 'player', function (err, res) {
+            Tarot.findById(req.session._id, 'user', function (err, res) {
+                if (err) throw new Error("Mongoose - "+err.message);
                 // si le model n'est pas null
                 if (res) {
-                    req.io.respond({success: true, player: res.player.toObject()});
+                    req.io.respond({success: true, user: res.user.toObject()});
                 } else {
                     req.io.respond({success: false});
                 }

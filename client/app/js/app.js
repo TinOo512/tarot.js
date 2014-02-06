@@ -10,23 +10,24 @@ var tarotApp = angular.module('tarotApp', [
   'GameCtrl',
   'GamesHistoryCtrl',
   'AboutCtrl',
-  'PlayerModel',
+  'UserModel',
   'LoginFormDirectives'
 ]);
 
-tarotApp.run(['$rootScope', 'Socket', 'Player', function($rootScope, Socket, Player){
+tarotApp.run(['$rootScope', 'Socket', 'User', function($rootScope, Socket, User){
+    //todo: rename Player to User
     console.log('TarotApp');
-    $rootScope.Player = Player;
+    $rootScope.User = User;
 
     Socket.emit('player/get-player', {}, function (rep) {
         if (rep.success)
-            $rootScope.Player = rep.player;
+            $rootScope.User = rep.user;
         else
-            $rootScope.Player = Player;
+            $rootScope.User = User;
     });
 
-    $rootScope.submitLogin = function(Player){
-        Socket.emit('user/submit-login', {player:Player}, function (rep) {
+    $rootScope.submitLogin = function(User){
+        Socket.emit('user/submit-login', {user:User}, function (rep) {
             console.log(rep);
         });
     };

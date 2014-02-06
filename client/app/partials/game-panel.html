@@ -18,15 +18,13 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>{{Player.name}}</th>
-                    <th ng-repeat="guestPlayer in Game.guestPlayers">{{guestPlayer.name}}</th>
+                    <th ng-repeat="player in Game.players">{{player.name}}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="round in Game.rounds">
                     <td></td>
-                    <td>{{round.getScore(Player.name)}}</td>
-                    <td ng-repeat="guestPlayer in Game.guestPlayers">{{round.getScore(guestPlayer.name)}}</td>
+                    <td ng-repeat="player in Game.players">{{round.getScore(player.name)}}</td>
                 </tr>
             </tbody>
         </table>
@@ -47,8 +45,7 @@
                         <div class="panel-body">
                             <input ng-model="Round.dealer" required type="hidden" id="dealer" name="dealer">
                             <div ng-model="Round.dealer" ng-active class="btn-group btn-group-justified">
-                                <a ng-click="Round.setDealer(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
-                                <a ng-click="Round.setDealer(guestPlayer.name)" data-value="{{guestPlayer.name}}" ng-repeat="guestPlayer in Game.guestPlayers" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
+                                <a ng-click="Round.setDealer(player.name)" data-value="{{player.name}}" ng-repeat="player in Game.players" role="button" class="btn btn-default">{{player.name}}</a>
                             </div>
                         </div>
                     </div>
@@ -67,8 +64,7 @@
                             Preneur
                             <input ng-model="Round.taker" required type="hidden" id="taker" name="taker">
                             <div ng-model="Round.taker" ng-active class="btn-group btn-group-justified">
-                                <a ng-click="Round.setTaker(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
-                                <a ng-repeat="guestPlayer in Game.guestPlayers" data-value="{{guestPlayer.name}}" ng-click="Round.setTaker(guestPlayer.name)" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
+                                <a ng-repeat="player in Game.players" data-value="{{player.name}}" ng-click="Round.setTaker(player.name)" role="button" class="btn btn-default">{{player.name}}</a>
                             </div>
                             <div ng-show="Game.nbPlayers == 5">
                                 Couleur appelee
@@ -82,8 +78,7 @@
                                 Joueur appele
                                 <input ng-model="Round.calledPlayer" required type="hidden" id="calledPlayer" name="calledPlayer">
                                 <div ng-model="Round.calledPlayer" ng-active class="btn-group btn-group-justified">
-                                    <a ng-click="Round.setCalledPlayer(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
-                                    <a ng-repeat="guestPlayer in Game.guestPlayers" data-value="{{guestPlayer.name}}" ng-click="Round.setCalledPlayer(guestPlayer.name)" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
+                                    <a ng-repeat="player in Game.players" data-value="{{player.name}}" ng-click="Round.setCalledPlayer(player.name)" role="button" class="btn btn-default">{{player.name}}</a>
                                 </div>
                             </div>
                             Nombre de bouts
@@ -144,8 +139,7 @@
                         <div class="panel-heading">Distributeur</div>
                         <div class="panel-body">
                             <div ng-model="Round.dealer" ng-active class="btn-group btn-group-justified">
-                                <a ng-click="Round.setDealer(Player.name)" data-value="{{Player.name}}" role="button" class="btn btn-default">{{Player.name}}</a>
-                                <a ng-click="Round.setDealer(guestPlayer.name)" data-value="{{guestPlayer.name}}" ng-repeat="guestPlayer in Game.guestPlayers" role="button" class="btn btn-default">{{guestPlayer.name}}</a>
+                                <a ng-click="Round.setDealer(player.name)" data-value="{{player.name}}" ng-repeat="player in Game.players" role="button" class="btn btn-default">{{player.name}}</a>
                             </div>
                         </div>
                     </div>

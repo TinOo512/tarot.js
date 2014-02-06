@@ -9,11 +9,11 @@
                 }
             },
             "player" :{
-                "addPlayerAction" :{
-                    "path":"player/add-player"
+                "addUserAction" :{
+                    "path":"player/add-user"
                 },
-                "getPlayerAction": {
-                    "path":"player/get-player"
+                "getUserAction": {
+                    "path":"player/get-user"
                 }
             },
             "game" :{
