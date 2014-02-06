@@ -3,4 +3,24 @@
         <h1>Historique</h1>
         <p>@todo</p>
     </div>
+    <div class="panel panel-default">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Nombre de joueur</th>
+                <th>Nombre de rounds</th>
+                <th>Gagnant / Perdant</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="game in games">
+                <td>{{game.dateStart}}</td>
+                <td>{{game.nbPlayers}}</td>
+                <td>{{game.nbRounds}}</td>
+                <td>{{game.winner}} / {{game.looser}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
