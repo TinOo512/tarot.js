@@ -9,12 +9,6 @@
                 }
             },
             "player" :{
-                "addUserAction" :{
-                    "path":"player/add-user"
-                },
-                "getUserAction": {
-                    "path":"player/get-user"
-                }
             },
             "game" :{
                 "addGameAction" :{
