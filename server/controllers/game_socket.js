@@ -2,20 +2,20 @@ if (typeof define !== 'function') {
     var define = (require('amdefine'))(module);
 }
 define([
-    '../lib/mongoose'
-], function (mongoose) {
+    '../lib/mongoose',
+    'bcrypt'
+], function (mongoose, bcrypt) {
     'use strict';
 
-    var self = this;
-    this.user = null;
-    this.players = null;
+    var user = null,
+        players = null;
 
     function pushGuestPlayers(req, res) {
         // on commence a 1 car l'offset 0 contient l'user
-        for (var i=1 ; i<self.players.length ; i++) {
+        for (var i=1 ; i<players.length ; i++) {
             // on insert le guestPlayers si celui-ci n'existe pas deja
-            if (!res.hasGuestPlayer(self.players[i])) {
-                res.guestPlayers.push(self.players[i]);
+            if (!res.hasGuestPlayer(players[i])) {
+                res.guestPlayers.push(players[i]);
             }
         }
 
@@ -27,14 +27,13 @@ define([
         var unfinishedGame = res.getUnfinishedGame();
         if (!unfinishedGame) {
             var game = {};
-            game.players = self.players;
+            game.players = players;
             game.status = true;
             game.nbPlayers = game.players.length;
             game.dateStart = new Date();
             res.games.push(game);
 
             res.save(function (err, res, numberAffected) {
-                debugger;
                 if (err) throw new Error("Mongoose - "+err.message);
                 // si la game est bien insert
                 if (res) {
@@ -53,35 +52,40 @@ define([
         addGameAction: function(req) {
             var Tarot = mongoose.models.tarot;
 
-            self.user = req.data.user;
-            self.players = req.data.game.players;
+            user = req.data.user;
+            players = req.data.game.players;
 
-            Tarot.findOne({player: self.user}, function (err, res) {
-                // si le model est null
-                if (!res) {
-                    // on insert un nouveau player
-                    var tarot = new Tarot();
-                    tarot.user = self.user;
-                    tarot.save(function (err, res, numberAffected) {
-                        if (err) throw new Error("Mongoose - "+err.message);
-                        // si le player est bien insert
-                        if (res) {
-                            // on ajoute l'id en session
-                            req.session._id = res._id;
+            var res = Tarot.findUserByName(user, false);
+            // si l'username et le password match
+            if (res._id) {
+                req.session._id = res._id;
+                req.session.user = res.user;
+                // on ajoute les guestPlayers
+                pushGuestPlayers(req, res);
+            //sinon
+            } else {
+                // on insert un nouveau player
+                var tarot = new Tarot();
+                // sans oublie de hash le password
+                bcrypt.genSalt(10, function(err, salt) {
+                    bcrypt.hash(user.password, salt, function(err, hash) {
+                        user.password = hash;
+                        tarot.user = user;
+                        tarot.save(function (err, res, numberAffected) {
+                            if (err) throw new Error("Mongoose - "+err.message);
+                            // si le player est bien insert
+                            if (res) {
+                                // on ajoute l'id en session
+                                req.session._id = res._id;
+                                req.session.user = res.user;
 
-                            // on ajoute les guestPlayers
-                            pushGuestPlayers(req, res);
-                        }
+                                // on ajoute les guestPlayers
+                                pushGuestPlayers(req, res);
+                            }
+                        });
                     });
-                // si le model n'est pas null
-                } else {
-                    // on ajoute l'id en session
-                    req.session._id = res._id;
-
-                    // on ajoute les guestPlayers
-                    pushGuestPlayers(req, res);
-                }
-            });
+                });
+            }
         },
 
         getGameAction: function(req) {

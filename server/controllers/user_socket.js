@@ -4,7 +4,7 @@ if (typeof define !== 'function') {
 define([
     '../utils/tools_socket',
     '../lib/mongoose'
-], function (tools,mongoose) {
+], function (tools, mongoose) {
     'use strict';
 
     return {
@@ -19,16 +19,15 @@ define([
             var Tarot = mongoose.models.tarot;
             var user = req.data.user;
 
-            Tarot.findOne({user: user}, 'user', { lean: true }, function (err, res) {
-                if (err) throw new Error("Mongoose - "+err.message);
-                // si le model est null
-                if (res) {
-                    req.session.user = res.user;
-                    if(req.session.save())
-                        return req.io.respond(true);
-                }
-                return req.io.respond(false);
-            });
+            var res = Tarot.findUserByName(user, true);
+            // si l'username et le password match
+            if (res._id) {
+                req.session._id = res._id;
+                req.session.user = res.user;
+                if(req.session.save())
+                    return req.io.respond(true);
+            }
+            return req.io.respond(false);
         }
     };
 });

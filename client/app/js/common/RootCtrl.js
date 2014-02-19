@@ -5,7 +5,7 @@
 var rootCtrl = angular.module('RootCtrl', [
     'LoginFormDirectives',
     'SocketService',
-    'UserModel',
+    'UserModel'
 ]);
 
 rootCtrl.controller('RootCtrl', ['$scope', 'Socket', 'User',

@@ -77,7 +77,6 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
 gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Consts', 'Game', 'Round', 'Socket',
     function($scope, $rootScope, $routeParams, $location, Consts, Game, Round, Socket) {
         console.log('GamePanelCtrl');
-        debugger;
         $rootScope.active = 'game';
         $scope.Consts = Consts;
 

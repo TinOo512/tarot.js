@@ -3,10 +3,11 @@ if (typeof define !== 'function') {
 }
 define([
     'mongoose',
+    'bcrypt',
     './User',
     './Player',
     './Game'
-], function (Mongoose, User, Player, Game) {
+], function (Mongoose, bcrypt, User, Player, Game) {
     'use strict';
 
     var Schema = Mongoose.Schema;
@@ -21,7 +22,25 @@ define([
         ]
     });
 
-    //Player Methods
+    //Class Methods
+
+    TarotSchema.static('findUserByName', function (user, lean) {
+        return this.findOne({'user.name': user.name}, 'user', { lean: lean }, function (err, res) {
+            if (err) throw new Error("Mongoose - "+err.message);
+            // si le model est null
+            if (res) {
+                //on compare le password en clair avec le hash
+                bcrypt.compare(user.password, res.password, function(err, res) {
+                    if (res == true) {
+                        return res._id;
+                    }
+                });
+            }
+            return false
+        });
+    });
+
+    //Instance Methods
 
     //GuestPlayer Methods
     TarotSchema.methods.hasGuestPlayer = function (guestPlayer) {
