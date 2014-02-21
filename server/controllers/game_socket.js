@@ -55,37 +55,38 @@ define([
             user = req.data.user;
             players = req.data.game.players;
 
-            var res = Tarot.findUserByName(user, false);
-            // si l'username et le password match
-            if (res._id) {
-                req.session._id = res._id;
-                req.session.user = res.user;
-                // on ajoute les guestPlayers
-                pushGuestPlayers(req, res);
-            //sinon
-            } else {
-                // on insert un nouveau player
-                var tarot = new Tarot();
-                // sans oublie de hash le password
-                bcrypt.genSalt(10, function(err, salt) {
-                    bcrypt.hash(user.password, salt, function(err, hash) {
-                        user.password = hash;
-                        tarot.user = user;
-                        tarot.save(function (err, res, numberAffected) {
-                            if (err) throw new Error("Mongoose - "+err.message);
-                            // si le player est bien insert
-                            if (res) {
-                                // on ajoute l'id en session
-                                req.session._id = res._id;
-                                req.session.user = res.user;
+            Tarot.findUserByName(user, false, function(res) {
+                // si l'username et le password match
+                if (res) {
+                    req.session._id = res._id;
+                    //req.session.user = res.user;
+                    // on ajoute les guestPlayers
+                    pushGuestPlayers(req, res);
+                    //sinon
+                } else {
+                    // on insert un nouveau player
+                    var tarot = new Tarot();
+                    // sans oublie de hash le password
+                    bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(user.password, salt, function(err, hash) {
+                            user.password = hash;
+                            tarot.user = user;
+                            tarot.save(function (err, res, numberAffected) {
+                                if (err) throw new Error("Mongoose - "+err.message);
+                                // si le player est bien insert
+                                if (res) {
+                                    // on ajoute l'id en session
+                                    req.session._id = res._id;
+                                    //req.session.user = res.user;
 
-                                // on ajoute les guestPlayers
-                                pushGuestPlayers(req, res);
-                            }
+                                    // on ajoute les guestPlayers
+                                    pushGuestPlayers(req, res);
+                                }
+                            });
                         });
                     });
-                });
-            }
+                }
+            });
         },
 
         getGameAction: function(req) {

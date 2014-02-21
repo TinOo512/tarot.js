@@ -22,7 +22,7 @@
     <![endif]-->
 </head>
 
-<body ng-controller="RootCtrl as root">
+<body ng-controller="RootCtrl">
 
     <!-- Wrap all page content here -->
     <div id="wrap">
@@ -55,25 +55,11 @@
                         <li ng-class="{active: active=='gamesHistory'}"><a href="#/games-history">Historique</a></li>
                         <li ng-class="{active: active=='about'}"><a href="#/about">À propos</a></li>
                     </ul>
-                    <div id="login-bar" class="navbar-right">
-                        <span id="login-username">Test</span>
-                        <button type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-user"></span>
-                        </button>
-                        <div id="login-content">
-                            <form ng-form-login class="form-inline" role="form" ng-submit="submitLogin(User)">
-                                <div class="form-group">
-                                    <label class="sr-only" for="login">Pseudo</label>
-                                    <input required ng-model="User.name" type="text" class="form-control" id="login" placeholder="Pseudo">
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="password">Password</label>
-                                    <input required ng-model="User.password" type="password" class="form-control" id="password" placeholder="Password">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Sign in</button>
-                            </form>
-                        </div>
-                    </div>
+                    <button ng-show="User.name != null" type="button" class="btn btn-default navbar-right" style="margin-top: 8px;">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <span id="login-username">{{User.name}}</span>
+                    </button>
+                    <div ng-show="User.name == null" ng-form-login></div>
                 </div><!--/.nav-collapse -->
             </div>
         </div>

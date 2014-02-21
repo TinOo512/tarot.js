@@ -45,31 +45,3 @@ body {
 code {
     font-size: 80%;
 }
-
-/* Login Barre */
-#login-bar {
-    padding-top: 8px;
-}
-
-#login-content {
-    display: block;
-    opacity: 0;
-    transition: opacity 3s;
-    position: absolute;
-    z-index: 10;
-    background-color: #F8F8F8;
-    border: 1px solid #E7E7E7;
-    margin-left:-385px;
-    padding: 7px;
-    width: 455px;
-}
-
-#login-bar:hover #login-content {
-    opacity: 1 !important;
-    transition: opacity 1s;
-}
-
-
-#login-username {
-
-}

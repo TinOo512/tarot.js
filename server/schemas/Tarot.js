@@ -24,19 +24,19 @@ define([
 
     //Class Methods
 
-    TarotSchema.static('findUserByName', function (user, lean) {
-        return this.findOne({'user.name': user.name}, 'user', { lean: lean }, function (err, res) {
+    TarotSchema.static('findUserByName', function (user, lean, callback) {
+        this.findOne({'user.name': user.name}, 'user', { lean: lean }, function (err, res) {
             if (err) throw new Error("Mongoose - "+err.message);
             // si le model est null
             if (res) {
                 //on compare le password en clair avec le hash
-                bcrypt.compare(user.password, res.password, function(err, res) {
-                    if (res == true) {
-                        return res._id;
+                bcrypt.compare(user.password, res.user.password, function(bcryptErr, bcryptRes) {
+                    if (bcryptRes === true) {
+                        return callback(res);
                     }
+                    return callback(false)
                 });
             }
-            return false
         });
     });
 

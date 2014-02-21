@@ -25,11 +25,14 @@
                 }
             },
             "user" :{
-                "submitLogin" :{
+                "isLoggedAction" :{
+                    "path":"user/is-logged"
+                },
+                "submitLoginAction" :{
                     "path":"user/submit-login"
                 },
-                "isLogged" :{
-                    "path":"user/is-logged"
+                "getUserAction" :{
+                    "path":"user/get-user"
                 }
             }
         }

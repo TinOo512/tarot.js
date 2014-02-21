@@ -10,7 +10,6 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
         console.log('GameCreationCtrl');
 
         $rootScope.active = 'game';
-        $scope.User = User;
         $scope.nbPlayers = $routeParams.nbPlayers;
         var nbPlayers = parseInt($routeParams.nbPlayers);
         switch (nbPlayers) {

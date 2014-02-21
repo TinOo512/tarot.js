@@ -11,18 +11,14 @@ var rootCtrl = angular.module('RootCtrl', [
 rootCtrl.controller('RootCtrl', ['$scope', 'Socket', 'User',
     function($scope, Socket, User) {
         console.log('RootCtrl');
-        $scope.User = User;
 
-        Socket.emit('player/get-player', {}, function (rep) {
+        Socket.emit('user/get-user', {}, function (rep) {
             if (rep.success)
-                $scope.User = rep.user;
-            else
-                $scope.User = User;
-        });
+                User = rep.user;
 
-        $scope.submitLogin = function(User){
-            Socket.emit('user/submit-login', {user:User}, function (rep) {
-                console.log(rep);
-            });
-        };
+            $scope.User = User;
+            /*$scope.$watch('root.User', function( newValue, oldValue ) {
+                console.log(newValue, oldValue);
+            });*/
+        });
     }]);
