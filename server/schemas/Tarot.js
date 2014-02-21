@@ -37,6 +37,7 @@ define([
                     return callback(false)
                 });
             }
+            return callback(false)
         });
     });
 

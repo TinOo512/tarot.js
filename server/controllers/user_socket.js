@@ -24,7 +24,7 @@ define([
                 if (res) {
                     req.session._id = res._id;
                     //req.session.user = res.user;
-                    req.session.save()
+                    req.session.save();
                     return req.io.respond(true);
                 }
                 return req.io.respond(false);

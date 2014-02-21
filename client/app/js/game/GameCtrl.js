@@ -7,6 +7,7 @@ var gameCtrl = angular.module('GameCtrl', ['ConstsService', 'UserModel', 'GameMo
 gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'User', 'Game', 'Socket',
     function($scope, $rootScope, $routeParams, $location, User, Game, Socket) {
         //todo: use the Player of the rootScope
+        //todo: refactor this and set the authenticated=true if game/add-game return true
         console.log('GameCreationCtrl');
 
         $rootScope.active = 'game';
