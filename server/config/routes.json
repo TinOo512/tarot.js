@@ -28,8 +28,8 @@
                 "submitLogin" :{
                     "path":"user/submit-login"
                 },
-                "isConnected" :{
-                    "path":"user/is-connected"
+                "isLogged" :{
+                    "path":"user/is-logged"
                 }
             }
         }

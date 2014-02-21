@@ -8,8 +8,8 @@ define([
     'use strict';
 
     return {
-        isConnected: function(req){
-            if(tools.isConnected(req) !== false)
+        isLogged: function(req){
+            if(tools.isLogged(req) !== false)
                 req.io.respond(true);
             else
                 req.io.respond(false);

@@ -7,7 +7,7 @@ define([
 
     var Tools = {
 
-        isConnected: function(req) {
+        isLogged: function(req) {
             if(req.session._id) return req.session._id;
             else return false;
         }
