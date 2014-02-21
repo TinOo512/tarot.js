@@ -4,7 +4,7 @@
 
 var constsService = angular.module('ConstsService', []);
 
-constsService.service('Consts', [
+constsService.factory('Consts', [
     function(){
         // private
 

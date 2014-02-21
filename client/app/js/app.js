@@ -16,6 +16,7 @@ tarotApp.run(['$rootScope', '$location', 'Auth', function($rootScope, $location,
     $rootScope.$on("$routeChangeStart", function(event, next, current) {
         if(next.authenticate) {
             Auth.isAuthenticated(function(authenticated) {
+                console.log('authenticated', authenticated);
                 if (!authenticated) {
                     // User isn’t authenticated
                     $location.path('/user/login');

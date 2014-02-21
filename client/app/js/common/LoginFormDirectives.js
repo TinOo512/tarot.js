@@ -39,7 +39,6 @@ loginFormDirectives.directive('ngFormLogin', function() {
         controller: ['$scope', 'Socket', 'Auth', 'User', function($scope, Socket, Auth, User) {
             $scope.submitLogin = function(user){
                 Socket.emit('user/submit-login', {user:user}, function (rep) {
-                    console.log(rep);
                     if (rep !== false) {
                         Auth.authenticated = true;
                         $scope.$parent.User.name = user.name;

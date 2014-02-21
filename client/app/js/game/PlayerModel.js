@@ -4,7 +4,7 @@
 
 var playerModel = angular.module('PlayerModel', []);
 
-playerModel.service('Player', [
+playerModel.factory('Player', [
     function() {
         function Player(name, owner) {
             this.name = (typeof name === "undefined") ? null : name;

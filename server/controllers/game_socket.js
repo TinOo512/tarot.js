@@ -90,6 +90,7 @@ define([
         },
 
         getGameAction: function(req) {
+            //todo: check that probably a bug because i can't go http://localhost:3000/#/game/panel
             var Tarot = mongoose.models.tarot;
 
             Tarot.findOne({'games._id': req.session.game_id}, 'games', { lean: true }, function (err, res) {

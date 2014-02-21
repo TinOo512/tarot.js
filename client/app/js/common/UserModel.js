@@ -4,7 +4,7 @@
 
 var userModel = angular.module('UserModel', []);
 
-userModel.service('User', [
+userModel.factory('User', [
     function() {
         var User = {
             name: null,

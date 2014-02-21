@@ -4,7 +4,7 @@
 
 var roundModel = angular.module('RoundModel', ['ConstsService']);
 
-roundModel.service('Round', ['Consts',
+roundModel.factory('Round', ['Consts',
     function(Consts) {
         //private
         var ATTACK = 0;
