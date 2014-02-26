@@ -36,8 +36,9 @@ define([
                     }
                     return callback(false)
                 });
+            } else {
+                return callback(false)
             }
-            return callback(false)
         });
     });
 

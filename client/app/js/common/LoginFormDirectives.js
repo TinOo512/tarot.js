@@ -41,7 +41,7 @@ loginFormDirectives.directive('ngFormLogin', function() {
                 Socket.emit('user/submit-login', {user:user}, function (rep) {
                     if (rep !== false) {
                         Auth.authenticated = true;
-                        $scope.$parent.User.name = user.name;
+                        User.name = user.name;
                     }
                 });
             };
