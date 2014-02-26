@@ -26,6 +26,12 @@ gameModel.factory('Game', ['Player',
             },
             addUser: function (name) {
                 this.players[0] = new Player(name);
+            },
+            setGame: function (game) {
+                this.status = game.status;
+                this.nbPlayers = game.rounds.length;
+                this.players = game.players;
+                this.rounds = game.rounds;
             }
         }
 

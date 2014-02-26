@@ -40,11 +40,12 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
 
         $scope.Game = Game;
 
-        $scope.submit = function(User, Game) {
-            Game.addUser(User.name);
-            Socket.emit('game/add-game', { user: User, game: Game }, function (data) {
+        $scope.submit = function(user, game) {
+            game.addUser(user.name);
+            Socket.emit('game/add-game', { user: user, game: game }, function (data) {
                 // si la game a ete ajoute avec success
                 if (data.success === true) {
+                    Game.setGame(game);
                     return $location.path('/game/panel');
                 // si une game est toujours n'est pas fini
                 } else if (data.game) {
@@ -53,7 +54,7 @@ gameCtrl.controller('GameCreationCtrl', ['$scope', '$rootScope', '$routeParams',
                         data.game.rounds[i] = new Round().init(data.game.rounds[i]);
                     }
 
-                    Game = data.game;
+                    Game.setGame(data.game);
                     return $location.path('/game/panel');
                 }
                 //sinon error
@@ -84,7 +85,7 @@ gameCtrl.controller('GamePanelCtrl', ['$scope', '$rootScope', '$routeParams', '$
                     data.game.rounds[i] = new Round().init(data.game.rounds[i]);
                 }
 
-                Game = data.game;
+                Game.setGame(data.game);
                 setScope();
             });
         } else {
