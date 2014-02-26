@@ -38,12 +38,14 @@ define([
                 if (res) {
                     req.session.game_id = res.games[res.games.length-1]._id;
                     req.session.save();
+                    req.io.respond({success: true});
                 }
+                req.io.respond({success: false});
             });
         } else {
             req.session.game_id = unfinishedGame._id;
             req.session.save();
-            //todo: go to unfinished game!
+            req.io.respond({success: false, game: unfinishedGame.toObject()});
         }
     }
 
@@ -54,6 +56,7 @@ define([
             user = req.data.user;
             players = req.data.game.players;
 
+            //todo: gerer si l'user est deja log avec l'id en session
             Tarot.findUserByName(user, false, function(res) {
                 // si l'username et le password match
                 if (res) {

@@ -16,9 +16,6 @@ rootCtrl.controller('RootCtrl', ['$scope', 'Socket', 'User',
             if (rep.success)
                 User = rep.user;
 
-            $scope.User = User;
-            /*$scope.$watch('root.User', function( newValue, oldValue ) {
-                console.log(newValue, oldValue);
-            });*/
+            $scope.root.User = User;
         });
     }]);

@@ -22,7 +22,7 @@
     <![endif]-->
 </head>
 
-<body ng-controller="RootCtrl">
+<body ng-controller="RootCtrl as root">
 
     <!-- Wrap all page content here -->
     <div id="wrap">
@@ -55,11 +55,11 @@
                         <li ng-class="{active: active=='gamesHistory'}"><a href="#/games-history">Historique</a></li>
                         <li ng-class="{active: active=='about'}"><a href="#/about">À propos</a></li>
                     </ul>
-                    <button ng-show="User.name != null" type="button" class="btn btn-default navbar-right" style="margin-top: 8px;">
+                    <button ng-show="root.User.name != null" type="button" class="btn btn-default navbar-right" style="margin-top: 8px;">
                         <span class="glyphicon glyphicon-user"></span>
-                        <span id="login-username">{{User.name}}</span>
+                        <span id="login-username">{{root.User.name}}</span>
                     </button>
-                    <div ng-show="User.name == null" ng-form-login></div>
+                    <div ng-show="root.User.name == null" ng-form-login></div>
                 </div><!--/.nav-collapse -->
             </div>
         </div>
