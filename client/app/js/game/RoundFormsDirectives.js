@@ -42,7 +42,6 @@ roundFormsDirectives.directive('ngIntegerTarotScore', function() {
         restrict: 'A',
         require: 'ngModel',
         link: function(scope, iElement, iAttrs, ctrl) {
-            // todo: ca rentre pas ici quand j'update l'autre input au blur!
             ctrl.$parsers.unshift(function(viewValue) {
                 if (INTEGER_REGEXP.test(viewValue) && viewValue <= MAX_VALUE) {
                     // it is valid

@@ -25,7 +25,7 @@ define([
     //Class Methods
 
     TarotSchema.static('findUserByName', function (user, lean, callback) {
-        this.findOne({'user.name': user.name}, 'user', { lean: lean }, function (err, res) {
+        this.findOne({'user.name': user.name}, { lean: lean }, function (err, res) {
             if (err) throw new Error("Mongoose - "+err.message);
             // si le model est null
             if (res) {
@@ -58,7 +58,7 @@ define([
         return result;
     }
 
-    //Game Methods
+    //Game Methods //todo: opti that with request
     TarotSchema.methods.getUnfinishedGame = function () {
         var result = false;
         for (var i=0 ; i<this.games.length ; i++) {

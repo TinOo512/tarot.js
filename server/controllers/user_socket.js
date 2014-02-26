@@ -19,11 +19,17 @@ define([
             var Tarot = mongoose.models.tarot;
             var user = req.data.user;
 
-            Tarot.findUserByName(user, true, function(res) {
+            Tarot.findUserByName(user, false, function(res) {
                 // si l'username et le password match
                 if (res) {
                     req.session._id = res._id;
-                    //req.session.user = res.user;
+
+                    // si l'user a une game non fini on save son id en session
+                    var unfinishedGame = res.getUnfinishedGame();
+                    if (unfinishedGame) {
+                        req.session.game_id = unfinishedGame._id;
+                    }
+
                     req.session.save();
                     return req.io.respond(true);
                 }
